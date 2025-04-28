@@ -1,0 +1,30 @@
+<!-- BACKEND/app/templates/home.html-->
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="flex flex-col w-full">
+        <!--Bienvenido-->
+        <div class="text-start">
+            <h1 class="text-2xl text-[#1DAFDF] p-4 ml-10">Bienvenido a </h1>
+        </div>
+        <!--Logo y el nombre-->
+        <div class="flex items-center justify-center space-x-4 my-4">
+            <img src="{{ url_for('static', filename='images/logo_autoportec.png') }}" class="w-[100px] h-auto">
+            <h3 class="text-2xl md:text-4xl font-bold text-black">AutoPorTec</h3>
+        </div>
+        <!--Descripción de lo que se va a hacer-->
+        <div>
+            <p class="text-xl text-[#1DAFDF] my-5 text-center">Ahora el proceso de carga del Portafolio Digital será <strong>automático</strong>.</p>
+        </div>
+        <!--Imagen con la mitad de tamaño para el ancho-->
+        <div class="flex justify-center">
+            <img src="{{ url_for('static', filename='images/robots.jpg')}}" class="w-1/2 h-auto">
+        </div>
+        <!--Botón de continuar {carga de portafolio digital}-->
+        <div class="flex justify-center mb-1">
+            <a href="{{ url_for('carga_pd.pd_carga')}}" class="hover:bg-[#FFFFFF] hover:text-[#37AFE1] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFECB] p-3 text-lg rounded transition duration-200">
+                Continuar
+            </a>
+        </div>
+
+    </div>
+{% endblock %}

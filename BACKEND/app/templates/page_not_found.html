@@ -1,0 +1,31 @@
+<!-- BACKEND/app/templates/page_not_found.html-->
+{% extends 'layout.html' %}
+{% block content %}
+<!-- Pantalla de error -->
+<div class="flex flex-col items-center justify-center min-h-[80vh] px-4 text-center space-y-10">
+
+    <!-- Contenedor de imagen + texto -->
+    <div class="flex flex-col md:flex-row items-center justify-center max-w-5xl w-full space-y-8 md:space-y-0 md:space-x-8">
+        <!-- Imagen -->
+        <div class="w-full md:w-1/2 flex justify-center">
+            <img src="{{ url_for('static', filename='images/mike_t.png') }}" alt="Imagen de error 404" class="max-w-full h-auto">
+        </div>
+
+        <!-- Texto -->
+        <div class="w-full md:w-1/2 flex flex-col justify-center text-left">
+            <h2 class="text-3xl font-bold mb-4">¡UPS! LA PÁGINA NO SE HA ENCONTRADO</h2>
+            <p class="text-lg">
+                Vuelva a intentarlo más tarde, si el problema persiste contacte con el desarrollador:
+                <strong>abraham.nunez@tecsup.edu.pe</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Botón de volver -->
+    <div>
+        <a href="{{ url_for('home.inicio')}}" class="hover:bg-[#FFFFFF] hover:text-[#37AFE1] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFECB] p-4 text-lg rounded transition duration-200">
+            Volver al inicio
+        </a>
+    </div>
+</div>
+{% endblock %}

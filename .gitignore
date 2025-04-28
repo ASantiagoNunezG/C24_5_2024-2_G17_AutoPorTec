@@ -1,1 +1,15 @@
+# Configuración de Windows
 desktop.ini
+
+# Entornos virtuales de Python
+.venv/
+
+# Variables de entorno (claves secretas, tokens, contraseñas)
+.env
+
+# Archivos de credenciales (por seguridad)
+credentials.json
+credentials2.json
+
+# Configuraciones del editor PyCharm / JetBrains
+.idea/
