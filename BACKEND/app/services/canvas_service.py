@@ -1,7 +1,10 @@
 # BACKEND/app/services/canvas_service.py
 import requests
+from dotenv import load_dotenv
+import os
 
-BASE_CANVAS_URL = "https://canvas.instructure.com/api/v1"
+load_dotenv()
+BASE_CANVAS_URL = os.getenv('BASE_CANVAS_URL')
 
 def obtener_cursos(token):
     headers = {
@@ -19,7 +22,9 @@ def obtener_cursos(token):
         return None
 
 def obtener_materiales_curso(token, curso_id):
+
     archivos = []
+
     url = f"{BASE_CANVAS_URL}/courses/{curso_id}/files"
     headers = {"Authorization": f"Bearer {token}"}
 
