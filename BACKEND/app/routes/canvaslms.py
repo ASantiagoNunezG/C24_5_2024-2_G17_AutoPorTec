@@ -1,8 +1,10 @@
 # BACKEND/app/routes/canvaslms.py
-from flask import Blueprint, render_template, request, send_file, session, redirect, url_for, render_template
+from flask import Blueprint, render_template, request,  send_file, session, redirect, url_for, render_template
 from app.services.canvas_service import obtener_cursos, obtener_materiales_curso
-from app.services.google_drive_service import upload_to_drive
-from app.services.zip_service import crear_zip_en_memoria
+from app.services.google_drive_service import crear_carpeta_drive, subir_archivo_a_drive
+import mimetypes
+import requests  # se importa por separado
+from urllib.parse import unquote_plus
 
 canvaslms = Blueprint('canvaslms', __name__)
 
@@ -51,25 +53,43 @@ def recopilar_material_ruta(curso_id):
         return "No estás autenticado con Google Drive.", 401
 
     # Nombre de la carpeta / archivo
-    carpeta_nombre = request.form.get('carpeta_nombre', curso_id)
+    nombre_carpeta = request.form.get('carpeta_nombre', curso_id)
 
     # Obtener materiales del curso Canvas
     materiales = obtener_materiales_curso(canvas_token, curso_id)
     if not materiales:
         return "No se encontraron materiales para este curso", 404
 
-    # Crear ZIP en memoria
-    archivo_zip = crear_zip_en_memoria(materiales)
-    archivo_zip.seek(0)
+    carpeta_padre_id = '1V5vDQpMJzdeSX31zjp8QJPw_NQcrUGPv'  # ID real de tu carpeta
 
-    folder_id = '1V5vDQpMJzdeSX31zjp8QJPw_NQcrUGPv'  # ID real de tu carpeta
+    carpeta_drive_id = crear_carpeta_drive(google_token, nombre_carpeta, parent_id=carpeta_padre_id)
 
-    # Subir a Google Drive
-    resultado = upload_to_drive(google_token, archivo_zip, carpeta_nombre + '.zip', folder_id)
+    if not carpeta_drive_id:
+        return "Error al crear carpeta en Drive", 500
 
-    if resultado:
-        return f"Archivo subido con éxito a Google Drive. ID: {resultado['id']}"
-    else:
-        return "Error subiendo archivo a Google Drive", 500
+    # Subir archivos
+    for material in materiales:
 
+        nombre_archivo = material['filename']
+        nombre_archivo = unquote_plus(nombre_archivo)  # Decodifica URL encoding
+        archivo_url = material['url']
 
+        headers = {'Authorization': f'Bearer {canvas_token}'}
+        respuesta = requests.get(archivo_url, headers=headers)
+
+        if respuesta.status_code != 200:
+            print(f"Error descargando archivo: {archivo_url} - {respuesta.status_code}")
+            continue
+
+        contenido = respuesta.content  # ✅ Este sí son los bytes válidos del archivo
+
+        tipo_mime, _ = mimetypes.guess_type(nombre_archivo)
+        if not tipo_mime:
+            tipo_mime = 'application/octet-stream'
+
+        resultado = subir_archivo_a_drive(google_token, nombre_archivo, contenido, tipo_mime, carpeta_drive_id)
+        if not resultado:
+            return f"Error al subir el archivo: {nombre_archivo}", 500  # <- Agrega esto para evitar return None
+
+    enlace = f"https://drive.google.com/drive/folders/{carpeta_drive_id}"
+    return f"Material subido exitosamente. <a href='{enlace}' target='_blank'>Ver carpeta en Drive</a>"

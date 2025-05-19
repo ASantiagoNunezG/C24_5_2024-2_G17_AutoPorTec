@@ -1,42 +1,60 @@
-from flask import session
+# BACKEND/app/services/google_drive_service.py
 
 import requests
 import json
 
-def upload_to_drive(access_token, file_stream, file_name, folder_id=None):
+def subir_archivo_a_drive(access_token, nombre, contenido, mime_type, folder_id):
     headers = {
         "Authorization": f"Bearer {access_token}"
     }
 
+    if isinstance(nombre, bytes):
+        nombre = nombre.decode('utf-8')  # Decodifica si fuera necesario
+
     metadata = {
-        "name": file_name,
-        "mimeType": "application/zip"
+        'name': nombre,
+        'parents': [folder_id]
     }
-    # Si se proporciona un ID de carpeta, lo agregamos como padre
-    if folder_id:
-        metadata['parents'] = [folder_id]
 
-    multipart_boundary = "foo_bar_baz"
+    files = {
+        'metadata': (
+            'metadata',
+            json.dumps(metadata, ensure_ascii=False).encode('utf-8'),
+            'application/json; charset=UTF-8'
+        ),
+        'file': ('file', contenido, mime_type)
+    }
 
-    # Metadata en JSON
-    metadata_json = json.dumps(metadata)
+    response = requests.post(
+        'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',
+        headers=headers,
+        files=files
+    )
 
-    # Construir multipart body manualmente
-    multipart_data = (
-                         f'--{multipart_boundary}\r\n'
-                         f'Content-Type: application/json; charset=UTF-8\r\n\r\n'
-                         f'{metadata_json}\r\n'
-                         f'--{multipart_boundary}\r\n'
-                         f'Content-Type: application/zip\r\n\r\n'
-                     ).encode('utf-8') + file_stream.read() + f'\r\n--{multipart_boundary}--'.encode('utf-8')
+    return response.json() if response.status_code == 200 else None
 
-    headers["Content-Type"] = f"multipart/related; boundary={multipart_boundary}"
+def crear_carpeta_drive(access_token, nombre_carpeta, parent_id):
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json"
+    }
 
-    upload_url = "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart"
-    response = requests.post(upload_url, headers=headers, data=multipart_data)
+    metadata = {
+        "name": nombre_carpeta,
+        "mimeType": "application/vnd.google-apps.folder"
+    }
+
+    if parent_id:
+        metadata["parents"] = [parent_id]
+
+    response = requests.post(
+        "https://www.googleapis.com/drive/v3/files",
+        headers=headers,
+        data=json.dumps(metadata)
+    )
 
     if response.status_code == 200:
-        return response.json()
+        return response.json()["id"]
     else:
-        print("Error al subir archivo:", response.text)
+        print("Error creando carpeta:", response.content)
         return None
