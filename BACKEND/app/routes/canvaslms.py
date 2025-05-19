@@ -1,6 +1,7 @@
 # BACKEND/app/routes/canvaslms.py
 from flask import Blueprint, render_template, request, send_file, session, redirect, url_for, render_template
 from app.services.canvas_service import obtener_cursos, obtener_materiales_curso
+from app.services.google_drive_service import upload_to_drive
 from app.services.zip_service import crear_zip_en_memoria
 
 canvaslms = Blueprint('canvaslms', __name__)
@@ -41,22 +42,34 @@ def mostrar_cursos_guardado():
 @canvaslms.route('/canvas/recopilar_material/<curso_id>', methods=['POST'])
 def recopilar_material_ruta(curso_id):
 
-    token = session.get('canvas_token')  # Recupera el token seguro
-    if not token:
-        return "Token no disponible. Por favor, vuelve a ingresar tu token.", 403
+    canvas_token = session.get('canvas_token')  # Recupera el token seguro
+    google_token = session.get('google_token', {}).get('access_token')
 
+    if not canvas_token:
+        return "Token de Canvas no disponible. Por favor, vuelve a ingresar tu token.", 403
+    if not google_token:
+        return "No estás autenticado con Google Drive.", 401
+
+    # Nombre de la carpeta / archivo
     carpeta_nombre = request.form.get('carpeta_nombre', curso_id)
 
-    materiales = obtener_materiales_curso(token, curso_id)
+    # Obtener materiales del curso Canvas
+    materiales = obtener_materiales_curso(canvas_token, curso_id)
     if not materiales:
         return "No se encontraron materiales para este curso", 404
 
+    # Crear ZIP en memoria
     archivo_zip = crear_zip_en_memoria(materiales)
+    archivo_zip.seek(0)
 
-    return send_file(
-        archivo_zip,
-        mimetype='application/zip',
-        as_attachment=True,
-        download_name=carpeta_nombre+'.zip'
-    )
+    folder_id = '1V5vDQpMJzdeSX31zjp8QJPw_NQcrUGPv'  # ID real de tu carpeta
+
+    # Subir a Google Drive
+    resultado = upload_to_drive(google_token, archivo_zip, carpeta_nombre + '.zip', folder_id)
+
+    if resultado:
+        return f"Archivo subido con éxito a Google Drive. ID: {resultado['id']}"
+    else:
+        return "Error subiendo archivo a Google Drive", 500
+
 
