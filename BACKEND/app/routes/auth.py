@@ -81,4 +81,4 @@ def logout():
     print("Sesión después de logout: ", session)
 
     # Redirigir a la página de inicio o login
-    return redirect(url_for('home.inicio'))
+    return redirect(url_for('carga_pd.pd_carga'))

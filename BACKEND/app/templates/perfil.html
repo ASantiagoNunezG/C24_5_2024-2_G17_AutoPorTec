@@ -6,21 +6,33 @@
 <div class="py-10 flex justify-center items-center">
 
     <div class="w-full max-w-screen-lg bg-white rounded-xl shadow-lg p-8 flex gap-8">
-        <!-- Bloque de notificaciones (40%) -->
+        <!-- Configuraciones (40%) -->
         <div class="w-2/5 bg-gray-50 rounded-lg p-6 shadow-md">
-            <h3 class="text-xl font-semibold text-[#1DAFDF] mb-4">Notificaciones</h3>
+            <h3 class="text-2xl font-semibold text-[#1DAFDF] mb-4">Configuraciones</h3>
             <div class="space-y-4">
-                <!-- Notificación 1 -->
-                <div class="bg-blue-100 p-4 rounded-lg">
-                    <p class="text-sm text-gray-600">Tu portafolio digital ha sido subido exitosamente.</p>
+                <!-- Activar/Desactivar Modo Oscuro -->
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-moon text-2xl text-[#1DAFDF]"></i> <!-- Icono junto al texto -->
+                        <span class="text-lg text-gray-700">Modo Oscuro</span>
+                    </div>
+                    <label for="darkMode" class="switch">
+                        <input type="checkbox" id="darkMode" class="switch-input w-8 h-8">
+                        <span class="switch-label"></span>
+                        <span class="switch-handle"></span>
+                    </label>
                 </div>
-                <!-- Notificación 2 -->
-                <div class="bg-yellow-100 p-4 rounded-lg">
-                    <p class="text-sm text-gray-600">Tu token de acceso de Canvas LMS ha expirado. Renovarlo para continuar.</p>
-                </div>
-                <!-- Notificación 3 -->
-                <div class="bg-green-100 p-4 rounded-lg">
-                    <p class="text-sm text-gray-600"> El desarrollador te ha dado una respuesta, revisa tu correo.</p>
+                <!-- Activar/Desactivar Modo Guía -->
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-question-circle text-2xl text-[#1DAFDF]"></i> <!-- Icono junto al texto -->
+                        <span class="text-lg text-gray-700">Modo Guía</span>
+                    </div>
+                    <label for="guideMode" class="switch">
+                        <input type="checkbox" id="guideMode" class="switch-input w-8 h-8" checked>
+                        <span class="switch-label"></span>
+                        <span class="switch-handle"></span>
+                    </label>
                 </div>
             </div>
         </div>
@@ -29,10 +41,17 @@
         <div class="w-3/5">
             <!-- Avatar + Info -->
             <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-                <img src="{{ user['picture'] }}" alt="Avatar" class="w-40 h-40 rounded-full shadow border-2 border-[#1DAFDF]">
+                <img src="{{ user['picture'] if user['picture'] else url_for('static', filename='images/default_profile.png') }}" alt="Avatar" class="w-40 h-40 rounded-full shadow border-2 border-[#1DAFDF]">
                 <div>
+                    {% if user %}
+
                     <h1 class="text-3xl font-bold text-[#1DAFDF]">{{ user['name'] }}</h1>
                     <p class="text-gray-600 text-xl">{{ user['email'] }}</p>
+
+                    {% else %}
+                    <h1 class="text-2xl font-bold text-[#1DAFDF]">Inicie sesión para ver su perfil</h1>
+                    {% endif %}
+
                 </div>
             </div>
 
@@ -43,8 +62,8 @@
                 </a>
 
                 {% if user %}
-                <a href="{{ url_for('home.inicio') }}" class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-6 rounded-lg shadow">
-                    Volver a inicio
+                <a href="{{ url_for('carga_pd.pd_carga') }}" class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-6 rounded-lg shadow">
+                    Regresar
                 </a>
                 {% else %}
                 <a href="{{ url_for('auth.login') }}" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg shadow">

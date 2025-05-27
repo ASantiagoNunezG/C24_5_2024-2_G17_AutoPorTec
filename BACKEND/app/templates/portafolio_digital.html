@@ -1,0 +1,75 @@
+<!-- BACKEND/app/templates/portafolio_digital.html -->
+{% extends 'layout.html' %}
+
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div id="alert-container" class="fixed top-4 right-4 z-50 space-y-2">
+    {% for category, message in messages %}
+    <div
+            class="relative px-4 py-3 rounded shadow-md text-white
+                {{ 'bg-green-600' if category == 'success' else 'bg-red-600' }}
+                transition-opacity duration-500"
+    >
+        <span>{{ message }}</span>
+        <!-- Botón para cerrar -->
+        <button onclick="this.parentElement.remove()"
+                class="absolute top-1 right-2 text-white font-bold">
+            &times;
+        </button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<div class="flex flex-col items-center justify-center w-full min-h-screen p-4">
+    <div class="flex flex-col md:flex-row bg-[#FFFECB] border-2 border-[#1DAFDF] rounded-xl shadow-md hover:shadow-xl transition duration-200 overflow-hidden w-full max-w-4xl">
+
+        <!-- IZQUIERDA: Imagen -->
+        <div class="md:w-1/2 w-full m-5">
+            <img src="{{ url_for('static', filename='images/portafolio_digital.png') }}" alt="Portafolio Digital"
+                 class="object-cover w-full h-full rounded-l-xl border-2 border-[#1DAFDF]">
+        </div>
+
+        <!-- DERECHA: Formulario -->
+        <div class="md:w-1/2 w-full p-6 flex flex-col justify-center">
+            <form action="{{ url_for('portafoliod.generar_pd') }}" method="POST" class="space-y-4">
+                <div>
+                    <label for="nombre_portafolio" class="block text-sm font-semibold text-[#1DAFDF] mb-1">
+                        Nombre del Portafolio
+                    </label>
+                    <input type="text" id="nombre_portafolio" name="nombre_portafolio" required
+                           placeholder="Ej. Aplicaciones Móviles Avanzado"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1DAFDF]">
+                </div>
+                <div>
+                    <button type="submit"
+                            class="w-full bg-[#1DAFDF] text-white py-2 px-4 rounded-md hover:bg-[#37AFE1] transition duration-200 font-semibold">
+                        Generar Portafolio Digital
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+<!-- Barra de navegación -->
+<div class="flex justify-between mt-6 p-4">
+    <a href="{{ url_for('canvaslms.canvas') }}"
+       class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold">← Anterior</a>
+    <a href="#"
+       class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold">Siguiente →</a>
+</div>
+<script>
+    setTimeout(() => {
+      const alerts = document.querySelectorAll("#alert-container > div");
+      alerts.forEach(alert => {
+        alert.classList.add("opacity-0");
+        setTimeout(() => alert.remove(), 500); // espera a que termine la transición
+      });
+    }, 4000); // 4 segundos
+</script>
+
+{% endblock %}

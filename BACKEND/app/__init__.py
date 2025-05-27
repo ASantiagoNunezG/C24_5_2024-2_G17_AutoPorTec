@@ -6,13 +6,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Importar blueprints solo dentro de create_app, después de que oauth esté configurado
-from app.routes.ajustes import ajustes
 from app.routes.ayuda import ayuda
 from app.routes.canvaslms import canvaslms
-from app.routes.mas import mas
 from app.routes.routes import home_bp
 from app.routes.pd_routes import carga_pd
 from app.routes.perfil import perfil
+from app.routes.portafolio_digital import portafolio_digital
 
 # Inicializar OAuth globalmente
 oauth = OAuth()
@@ -48,10 +47,9 @@ def create_app():
     # Registrar otros blueprints
     app.register_blueprint(home_bp)
     app.register_blueprint(carga_pd)
-    app.register_blueprint(ajustes)
-    app.register_blueprint(mas)
     app.register_blueprint(perfil)
     app.register_blueprint(ayuda)
     app.register_blueprint(canvaslms)
+    app.register_blueprint(portafolio_digital)
 
     return app

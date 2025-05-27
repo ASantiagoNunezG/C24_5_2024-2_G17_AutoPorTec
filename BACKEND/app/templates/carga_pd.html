@@ -3,36 +3,37 @@
 {% block content %}
 <div class="flex flex-col w-full">
 
+    <h1 class="text-3xl font-bold text-[#1DAFDF] mb-5 text-center pt-10">Carga del Portafolio Digital</h1>
     <p class="p-10 text-2xl text-[#1DAFDF] ml-10">Para empezar, tendrá que configurar cada respectivo componente...</p>
 
     <!-- Tres apartados para configurar el proceso de carga -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 p-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 p-10 items-stretch">
         <!-- Card: Canvas LMS -->
-        <div class="bg-[#FFFECB] border-2 border-[#1DAFDF] p-6 rounded-xl shadow-md hover:shadow-xl transition duration-200">
+        <div class="flex flex-col justify-between h-full bg-[#FFFECB] border-2 border-[#1DAFDF] p-6 rounded-xl shadow-md hover:shadow-xl transition duration-200">
             <div class="flex items-center mb-4">
                 <i class="fa-solid fa-school text-3xl text-[#1DAFDF] mr-4"></i>
                 <h3 class="text-xl font-semibold text-[#1DAFDF]">Canvas LMS</h3>
             </div>
-            <p class="text-gray-700 mb-4">Configura tu integración con Canvas LMS para poder jalar los archivos del curso.</p>
+            <p class="text-gray-700 mb-4">Configura tu integración con Canvas LMS para poder recopilar los archivos o materiales para poder generar el Portafolio Digital del curso que elijas.</p>
             <a href="{{ url_for('canvaslms.canvas')}}" class="inline-block text-lg hover:bg-[#FFFFFF] hover:text-[#37AFE1] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFECB] p-3 rounded transition duration-200 w-full text-center">
                 Configurar
             </a>
         </div>
 
         <!-- Card: Portafolio Digital -->
-        <div class="bg-[#FFFECB] border-2 border-[#1DAFDF] p-6 rounded-xl shadow-md hover:shadow-xl transition duration-200">
+        <div class="flex flex-col justify-between h-full bg-[#FFFECB] border-2 border-[#1DAFDF] p-6 rounded-xl shadow-md hover:shadow-xl transition duration-200">
             <div class="flex items-center mb-4">
                 <i class="fa-solid fa-briefcase text-3xl text-[#1DAFDF] mr-4"></i>
                 <h3 class="text-xl font-semibold text-[#1DAFDF]">Portafolio Digital</h3>
             </div>
             <p class="text-gray-700 mb-4">Configura tu Portafolio Digital y previsualiza antes de cargarlo.</p>
-            <a href="{{ url_for('carga_pd.pd_carga')}}" class="inline-block text-lg hover:bg-[#FFFFFF] hover:text-[#37AFE1] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFECB] p-3 rounded transition duration-200 w-full text-center">
+            <a href="{{ url_for('portafoliod.portafolio')}}" class="inline-block text-lg hover:bg-[#FFFFFF] hover:text-[#37AFE1] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFECB] p-3 rounded transition duration-200 w-full text-center">
                 Configurar
             </a>
         </div>
 
         <!-- Card: Google Drive -->
-        <div class="bg-[#FFFECB] border-2 border-[#1DAFDF] p-6 rounded-xl shadow-md hover:shadow-xl transition duration-200">
+        <div class="flex flex-col justify-between h-full bg-[#FFFECB] border-2 border-[#1DAFDF] p-6 rounded-xl shadow-md hover:shadow-xl transition duration-200">
             <div class="flex items-center mb-4">
                 <i class="fab fa-google-drive text-3xl text-[#1DAFDF] mr-4"></i>
                 <h3 class="text-xl font-semibold text-[#1DAFDF]">Google Drive</h3>
@@ -49,11 +50,6 @@
         </div>
     </div>
 
-    <!-- Apartado visual para el botón de Empezar -->
-    <div class="flex justify-center mt-10">
-        <a href="{{ url_for('carga_pd.pd_carga')}}" class="text-lg hover:bg-[#FFFFFF] hover:text-[#37AFE1] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFECB] p-3 rounded transition duration-200">
-            Empezar
-        </a>
-    </div>
+
 </div>
 {% endblock %}

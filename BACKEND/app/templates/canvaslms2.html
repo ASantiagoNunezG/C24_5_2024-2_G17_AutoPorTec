@@ -56,7 +56,15 @@
         <p>{{ error }}</p>
     </div>
     {% endif %}
+
 </div>
+<!-- Barra de navegación -->
+<div class="flex justify-between mt-6 p-4">
+    <button disabled class="bg-gray-300 text-white py-2 px-6 rounded cursor-not-allowed">← Anterior</button>
+    <a href="{{ url_for('portafoliod.portafolio') }}"
+       class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold">Siguiente →</a>
+</div>
+
 <!-- Overlay global -->
 <div id="overlay-loader" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
     <div class="bg-white p-6 rounded-lg shadow-lg text-center">
