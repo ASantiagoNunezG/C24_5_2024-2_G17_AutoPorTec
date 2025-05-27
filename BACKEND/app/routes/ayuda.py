@@ -9,3 +9,11 @@ ayuda = Blueprint('ayuda', __name__)
 @ayuda.route('/ayuda')
 def help():
     return render_template('ayuda.html')
+
+@ayuda.route('/faq')
+def preguntas_frecuentes():
+    return render_template('centro_ayuda_templates/preguntas_frecuentes.html')
+
+@ayuda.route('/contacto')
+def soporte():
+    return render_template('centro_ayuda_templates/soporte.html')

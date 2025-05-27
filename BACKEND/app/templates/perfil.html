@@ -57,20 +57,28 @@
 
             <!-- Botones -->
             <div class="mt-10 flex flex-col sm:flex-row justify-between gap-4">
-                <a href="{{ url_for('auth.logout') }}" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow">
-                    Cerrar sesión
+
+                <!-- Botón Cerrar sesión -->
+                <a href="{{ url_for('auth.logout') }}"
+                   class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2">
+                    <i class="fas fa-sign-out-alt text-lg"></i> Cerrar sesión
                 </a>
 
                 {% if user %}
-                <a href="{{ url_for('carga_pd.pd_carga') }}" class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-6 rounded-lg shadow">
-                    Regresar
+                <!-- Botón Regresar -->
+                <a href="{{ url_for('carga_pd.pd_carga') }}"
+                   class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2">
+                    <i class="fas fa-arrow-left text-lg"></i> Regresar
                 </a>
                 {% else %}
-                <a href="{{ url_for('auth.login') }}" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg shadow">
-                    Iniciar sesión
+                <!-- Botón Iniciar sesión -->
+                <a href="{{ url_for('auth.login') }}"
+                   class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2">
+                    <i class="fas fa-sign-in-alt text-lg"></i> Iniciar sesión
                 </a>
                 {% endif %}
             </div>
+
         </div>
     </div>
 </div>

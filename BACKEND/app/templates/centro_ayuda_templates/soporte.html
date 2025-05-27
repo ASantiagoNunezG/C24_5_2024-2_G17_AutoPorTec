@@ -1,0 +1,38 @@
+<!-- BACKEND/app/templates/soporte.html -->
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="py-5 px-5 max-w-3xl mx-auto">
+
+    <!-- Botón Volver -->
+    <div class="mb-6">
+        <a href="{{ url_for('ayuda.help') }}" class="inline-block bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md transition">
+            ← Volver
+        </a>
+    </div>
+
+    <!-- Título -->
+    <h1 class="text-3xl font-bold text-[#1DAFDF] mb-6 text-center">Contáctanos</h1>
+
+    <!-- Imagen soporte -->
+    <div class="flex justify-center mb-6">
+        <img src="{{ url_for('static', filename='images/suport.jpg') }}" alt="Soporte" class=" object-contain">
+    </div>
+
+    <!-- Opciones externas -->
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <!-- WhatsApp -->
+        <a href="https://wa.me/51953203423" target="_blank" rel="noopener noreferrer"
+           class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg text-center shadow-md flex items-center justify-center gap-2">
+            <i class="fab fa-whatsapp text-xl"></i> WhatsApp
+        </a>
+
+        <!-- Gmail -->
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abraham.nunez@tecsup.edu.pe" target="_blank" rel="noopener noreferrer"
+           class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg text-center shadow-md flex items-center justify-center gap-2">
+            <i class="fas fa-envelope text-xl"></i> Gmail
+        </a>
+    </div>
+
+</div>
+{% endblock %}

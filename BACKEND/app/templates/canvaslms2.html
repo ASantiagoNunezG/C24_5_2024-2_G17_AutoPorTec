@@ -2,6 +2,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<!-- Estilos para este bloque de codigo-->
 <style>
     .loader {
       border: 6px solid #f3f3f3;
@@ -17,12 +18,23 @@
     }
 </style>
 
-<div class="p-4">
-    {% if cursos %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {% for curso in cursos %}
+<div class="flex flex-col items-center w-full p-4">
 
-        <div class="border rounded-lg p-4 shadow-md bg-white">
+    <!-- Botón Volver y Título -->
+    <div class="relative flex items-center justify-center mb-6 w-full max-w-6xl">
+        <a href="{{ url_for('carga_pd.pd_carga') }}"
+           class="absolute left-0 bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md transition">
+            ← Volver
+        </a>
+        <h1 class="text-3xl text-[#1DAFDF] font-bold">
+            Cursos
+        </h1>
+    </div>
+
+    {% if cursos %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
+        {% for curso in cursos %}
+        <div class="border rounded-lg p-4 shadow-md bg-white flex flex-col justify-between">
             {% if curso.image_download_url %}
             <img src="{{ curso.image_download_url }}" alt="Imagen del curso {{ curso.name }}"
                  class="w-full h-40 object-cover mb-3 rounded">
@@ -37,7 +49,7 @@
             <p class="text-sm text-gray-500 mb-3">Código: {{ curso.course_code }}</p>
 
             <!-- Formulario para recopilar materiales del curso -->
-            <form action="{{ url_for('canvaslms.recopilar_material_ruta', curso_id=curso.id) }}" method="POST" class="space-y-2">
+            <form action="{{ url_for('canvaslms.recopilar_material_ruta', curso_id=curso.id) }}" method="POST" class="space-y-2 mt-auto">
                 <div>
                     <label for="carpeta_nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre de la carpeta:</label>
                     <input type="text" id="carpeta_nombre" name="carpeta_nombre" value="{{ curso.name }}" required
@@ -57,13 +69,18 @@
     </div>
     {% endif %}
 
+    <!-- Barra de navegación -->
+    <div class="flex justify-between items-center w-full max-w-6xl mt-10 px-4">
+        <button disabled class="bg-gray-300 text-white py-2 px-6 rounded cursor-not-allowed opacity-70">
+            ← Anterior
+        </button>
+        <a href="{{ url_for('portafoliod.portafolio') }}"
+           class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold transition">
+            Siguiente →
+        </a>
+    </div>
 </div>
-<!-- Barra de navegación -->
-<div class="flex justify-between mt-6 p-4">
-    <button disabled class="bg-gray-300 text-white py-2 px-6 rounded cursor-not-allowed">← Anterior</button>
-    <a href="{{ url_for('portafoliod.portafolio') }}"
-       class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold">Siguiente →</a>
-</div>
+
 
 <!-- Overlay global -->
 <div id="overlay-loader" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
@@ -73,6 +90,7 @@
         <button onclick="ocultarOverlay()" class="mt-2 text-sm text-blue-500 hover:underline">Cerrar</button>
     </div>
 </div>
+<!--JavaScript para animar el overlay-->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
     const forms = document.querySelectorAll('form[action*="recopilar_material"]');

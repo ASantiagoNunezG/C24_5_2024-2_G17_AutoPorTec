@@ -1,20 +1,22 @@
-<!-- BACKEND/app/templates/ayuda
-..html-->
+<!-- BACKEND/app/templates/ayuda.html-->
 {% extends 'layout.html' %}
 
 {% block content %}
 <div class="py-10 flex justify-center items-center">
+
     <div class="w-full max-w-screen-md">
+
         <h1 class="text-3xl font-bold text-[#1DAFDF] mb-5 text-center">Centro de Ayuda</h1>
 
         <!--Los cuatro cards-->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+
             <!-- Preguntas Frecuentes -->
             <div class="bg-[#E0F7FF] rounded-xl p-6 shadow-lg text-center hover:shadow-xl transition flex flex-col justify-between h-full">
                 <i class="fas fa-question-circle text-4xl text-[#1DAFDF] mb-4"></i>
                 <h2 class="text-xl font-semibold mb-2">Preguntas Frecuentes</h2>
                 <p class="text-gray-600 mb-4">Respuestas rápidas a tus dudas más comunes.</p>
-                <a href="/faq">
+                <a href="{{ url_for('ayuda.preguntas_frecuentes') }}">
                     <button class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg">
                         Ver más
                     </button>
@@ -26,11 +28,11 @@
                 <i class="fas fa-route text-4xl text-[#1DAFDF] mb-4"></i>
                 <h2 class="text-xl font-semibold mb-2">Recorrido Guiado</h2>
                 <p class="text-gray-600 mb-4">Aprende a usar la plataforma paso a paso.</p>
-                <a href="/recorrido">
-                    <button class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg">
-                        Iniciar recorrido
+                <div class="text-center">
+                    <button type="button" id="btn-tour" class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md w-48 ">
+                        Iniciar Recorrido
                     </button>
-                </a>
+                </div>
             </div>
 
             <!-- Manual -->
@@ -38,9 +40,9 @@
                 <i class="fas fa-book text-4xl text-[#1DAFDF] mb-4"></i>
                 <h2 class="text-xl font-semibold mb-2">Manual</h2>
                 <p class="text-gray-600 mb-4">Consulta el manual detallado de funciones.</p>
-                <a href="/manual">
+                <a href="{{ url_for('static', filename='manual.pdf') }}" download>
                     <button class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg">
-                        Leer manual
+                        Descargar manual
                     </button>
                 </a>
             </div>
@@ -50,13 +52,16 @@
                 <i class="fas fa-headset text-4xl text-[#1DAFDF] mb-4"></i>
                 <h2 class="text-xl font-semibold mb-2">Soporte</h2>
                 <p class="text-gray-600 mb-4">Contáctanos si necesitas ayuda personalizada.</p>
-                <a href="/soporte">
+                <a href="{{ url_for('ayuda.soporte') }}">
                     <button class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg">
                         Contactar soporte
                     </button>
                 </a>
             </div>
+
         </div>
+
     </div>
+
 </div>
 {% endblock %}

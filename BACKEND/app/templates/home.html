@@ -20,11 +20,12 @@
             <img src="{{ url_for('static', filename='images/robots.jpg')}}" class="w-1/2 h-auto">
         </div>
         <!--Botón de empezar {carga de portafolio digital}-->
-        <div class="flex justify-center mb-1">
-            <a href="{{ url_for('carga_pd.pd_carga')}}" class="hover:bg-[#FFFFFF] hover:text-[#37AFE1] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFECB] p-3 text-lg rounded transition duration-200">
+        <div class="flex justify-center mb-1" >
+            <a href="{{ url_for('carga_pd.pd_carga')}}" class="hover:bg-[#FFFFFF] hover:text-[#37AFE1] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFECB] p-3 text-lg rounded transition duration-200" data-step="1" data-intro="Haz clic aquí para empezar">
                 Empezar
             </a>
         </div>
 
     </div>
+
 {% endblock %}

@@ -11,6 +11,11 @@
     <!--Tailwind {cambiar cuando se despliegue en producción}-->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Intro.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
+
+
 </head>
 <body class="min-h-screen flex flex-col">
 
@@ -57,6 +62,47 @@
     <footer id="footer" class="bg-[#F5F4B3] text-black p-4 text-center border-t-2 border-[#1DAFDF]">
         &copy; Copyright 2025, by Nuñez.
     </footer>
+
+    <!-- Intro.js JS -->
+    <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+          // --- Función: iniciar el tour si no se ha hecho aún
+          function iniciarTour() {
+            if (!localStorage.getItem('tour_pd_done')) {
+              introJs().setOptions({
+                showButtons: false  // Oculta los botones "Next", "Back" y "Done"
+              }).oncomplete(() => {
+                localStorage.setItem('tour_pd_done', 'true');
+              }).onexit(() => {
+                localStorage.setItem('tour_pd_done', 'true');
+              }).start();
+            }
+          }
+
+          // --- Función: reiniciar el tour
+          function reiniciarTour() {
+            localStorage.removeItem('tour_pd_done');
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 300);
+          }
+
+          // Ejecutar el tour si es la primera vez
+          iniciarTour();
+
+          // Si existe el botón de reinicio, añadirle el evento
+          const btnReiniciar = document.getElementById('btn-tour');
+          if (btnReiniciar) {
+            btnReiniciar.addEventListener('click', function () {
+              console.log('Reiniciando tour...');
+              reiniciarTour();
+            });
+          }
+
+        });
+    </script>
 
 </body>
 </html>

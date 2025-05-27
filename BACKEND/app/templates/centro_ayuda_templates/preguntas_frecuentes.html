@@ -1,0 +1,55 @@
+<!-- BACKEND/app/templates/pregruntas_frecuentes.html-->
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="py-10 px-5 max-w-5xl mx-auto">
+
+    <!-- Botón Volver -->
+    <div class="mb-6">
+        <a href="{{ url_for('ayuda.help') }}" class="inline-block bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md transition">
+            ← Volver
+        </a>
+    </div>
+
+    <h1 class="text-3xl font-bold text-[#1DAFDF] text-center mb-12">Preguntas Frecuentes</h1>
+
+    <!-- FAQ 1 -->
+    <div class="flex flex-col md:flex-row items-center mb-12 bg-[#E0F7FF] rounded-xl shadow-md p-6">
+        <img src="{{ url_for('static', filename='images/token_steps.png') }}" alt="Token Canvas" class="w-full md:w-1/2 rounded-lg mb-4 md:mb-0 md:mr-6">
+        <div class="md:w-1/2">
+            <h2 class="text-xl font-semibold text-[#1DAFDF] mb-2">¿Cómo obtengo el token de Canvas LMS?</h2>
+            <p class="text-gray-700">Para obtener tu token de acceso de Canvas LMS, inicia sesión en tu cuenta, ve a "Configuración", luego haz clic en "Accesos" y genera un nuevo token. Este token nos permite conectarnos para obtener tus archivos del curso. Recuerda copiarlo y guardarlo en un lugar seguro.</p>
+        </div>
+    </div>
+
+    <!-- FAQ 2 -->
+    <div class="flex flex-col md:flex-row-reverse items-center mb-12 bg-[#E0F7FF] rounded-xl shadow-md p-6">
+        <img src="{{ url_for('static', filename='images/google_drive_permissions.png') }}" alt="Permisos Google Drive" class="w-full md:w-1/2 rounded-lg mb-4 md:mb-0 md:ml-6">
+        <div class="md:w-1/2">
+            <h2 class="text-xl font-semibold text-[#1DAFDF] mb-2">¿Qué permisos se solicitan al iniciar sesión con Google?</h2>
+            <p class="text-gray-700">El inicio de sesión con Google nos permite validar tu identidad de forma segura. No tenemos acceso a tu información personal ni editamos tu perfil. Solo utilizamos tu cuenta como medio de autenticación para que puedas subir archivos desde Google Drive de manera más fácil y rápida.</p>
+        </div>
+    </div>
+
+    <!-- FAQ 3 -->
+    <div class="flex flex-col md:flex-row items-center mb-12 bg-[#E0F7FF] rounded-xl shadow-md p-6">
+        <img src="{{ url_for('static', filename='images/token_expiration.png') }}" alt="Duración del token Canvas" class="w-full md:w-1/2 rounded-lg mb-4 md:mb-0 md:mr-6">
+        <div class="md:w-1/2">
+            <h2 class="text-xl font-semibold text-[#1DAFDF] mb-2">¿Cuánto dura el token de Canvas LMS?</h2>
+            <p class="text-gray-700">La duración del token depende de la configuración de tu institución educativa. Generalmente, tiene una validez limitada. Si expira, deberás generar uno nuevo desde Canvas LMS siguiendo el mismo proceso de configuración inicial.</p>
+        </div>
+    </div>
+
+    <!-- FAQ 4 -->
+    <div class="flex flex-col md:flex-row-reverse items-center mb-12 bg-[#E0F7FF] rounded-xl shadow-md p-6">
+        <img src="{{ url_for('static', filename='images/log_out.png') }}" alt="Cerrar sesión" class="w-full md:w-1/2 rounded-lg mb-4 md:mb-0 md:ml-6">
+        <div class="md:w-1/2">
+            <h2 class="text-xl font-semibold text-[#1DAFDF] mb-2">¿Es necesario cerrar sesión?</h2>
+            <p class="text-gray-700">Sí, te recomendamos cerrar sesión una vez que hayas cargado tu portafolio digital. Esto garantiza una mayor seguridad y evita accesos no autorizados a tu cuenta si estás en un equipo compartido.</p>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

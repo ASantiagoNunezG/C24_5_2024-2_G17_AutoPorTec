@@ -23,40 +23,51 @@
 {% endif %}
 {% endwith %}
 
-<div class="flex flex-col items-center justify-center w-full min-h-screen p-4">
-    <div class="flex flex-col md:flex-row bg-[#FFFECB] border-2 border-[#1DAFDF] rounded-xl shadow-md hover:shadow-xl transition duration-200 overflow-hidden w-full max-w-4xl">
+<div class="flex flex-col items-center justify-start w-full min-h-[70vh] p-4 mt-4">
 
-        <!-- IZQUIERDA: Imagen -->
-        <div class="md:w-1/2 w-full m-5">
+    <!-- Botón Volver y Título -->
+    <div class="relative flex items-center justify-center mb-6 w-full max-w-4xl">
+        <a href="{{ url_for('carga_pd.pd_carga') }}"
+           class="absolute left-0 bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md transition">
+            ← Volver
+        </a>
+        <h1 class="text-3xl text-[#1DAFDF] font-bold">
+            Portafolio Digital
+        </h1>
+    </div>
+
+    <div class="flex flex-col md:flex-row bg-[#FFFECB] border border-[#1DAFDF] rounded-xl shadow-md hover:shadow-xl transition duration-200 w-full max-w-4xl">
+
+        <!-- Imagen -->
+        <div class="md:w-1/2 w-full p-4">
             <img src="{{ url_for('static', filename='images/portafolio_digital.png') }}" alt="Portafolio Digital"
-                 class="object-cover w-full h-full rounded-l-xl border-2 border-[#1DAFDF]">
+                 class="object-cover w-full h-auto rounded-xl border border-[#1DAFDF]">
         </div>
 
-        <!-- DERECHA: Formulario -->
-        <div class="md:w-1/2 w-full p-6 flex flex-col justify-center">
-            <form action="{{ url_for('portafoliod.generar_pd') }}" method="POST" class="space-y-4">
+        <!-- Formulario -->
+        <div class="md:w-1/2 w-full p-4 flex flex-col justify-center">
+            <form action="{{ url_for('portafoliod.generar_pd') }}" method="POST" class="space-y-3">
                 <div>
                     <label for="nombre_portafolio" class="block text-sm font-semibold text-[#1DAFDF] mb-1">
                         Nombre del Portafolio
                     </label>
                     <input type="text" id="nombre_portafolio" name="nombre_portafolio" required
                            placeholder="Ej. Aplicaciones Móviles Avanzado"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1DAFDF]">
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1DAFDF]">
                 </div>
-                <div>
-                    <button type="submit"
-                            class="w-full bg-[#1DAFDF] text-white py-2 px-4 rounded-md hover:bg-[#37AFE1] transition duration-200 font-semibold">
-                        Generar Portafolio Digital
-                    </button>
-                </div>
+                <button type="submit"
+                        class="w-full bg-[#1DAFDF] text-white py-2 rounded-md hover:bg-[#37AFE1] transition duration-200 font-semibold">
+                    Generar Portafolio Digital
+                </button>
             </form>
         </div>
 
     </div>
-
 </div>
+
+
 <!-- Barra de navegación -->
-<div class="flex justify-between mt-6 p-4">
+<div class="flex justify-between mt-2 p-4">
     <a href="{{ url_for('canvaslms.canvas') }}"
        class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold">← Anterior</a>
     <a href="#"
