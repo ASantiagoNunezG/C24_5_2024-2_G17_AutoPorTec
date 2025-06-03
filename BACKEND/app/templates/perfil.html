@@ -2,84 +2,93 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h1 class="text-4xl font-bold text-[#1DAFDF] mb-10 text-center pt-20">Mi Perfil</h1>
-<div class="py-10 flex justify-center items-center">
+<!-- Botón Volver -->
+<div class="py-5 px-5 max-w-5xl mx-auto">
+    <div class="mt-10">
+        <a href="{{ url_for('carga_pd.pd_carga') }}" class="inline-block bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md transition">
+            ← Volver
+        </a>
+    </div>
+    <h1 class="text-4xl font-bold text-[#1DAFDF] mb-10 text-center pt-20">Mi Perfil</h1>
+    <div class="py-2 flex justify-center items-center">
 
-    <div class="w-full max-w-screen-lg bg-white rounded-xl shadow-lg p-8 flex gap-8">
-        <!-- Configuraciones (40%) -->
-        <div class="w-2/5 bg-gray-50 rounded-lg p-6 shadow-md">
-            <h3 class="text-2xl font-semibold text-[#1DAFDF] mb-4">Configuraciones</h3>
-            <div class="space-y-4">
-                <!-- Activar/Desactivar Modo Oscuro -->
-                <div class="flex items-center justify-between mb-3">
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-moon text-2xl text-[#1DAFDF]"></i> <!-- Icono junto al texto -->
-                        <span class="text-lg text-gray-700">Modo Oscuro</span>
+        <div class="w-full max-w-screen-lg bg-white rounded-xl shadow-lg p-8 flex gap-8">
+            <!-- Configuraciones (40%) -->
+            <div class="w-2/5 bg-gray-50 rounded-lg p-6 shadow-md">
+                <h3 class="text-2xl font-semibold text-[#1DAFDF] mb-4">Configuraciones</h3>
+                <div class="space-y-4">
+                    <!-- Activar/Desactivar Modo Oscuro -->
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-moon text-2xl text-[#1DAFDF]"></i> <!-- Icono junto al texto -->
+                            <span class="text-lg text-gray-700">Modo Oscuro</span>
+                        </div>
+                        <label for="darkMode" class="switch">
+                            <input type="checkbox" id="darkMode" class="switch-input w-8 h-8">
+                            <span class="switch-label"></span>
+                            <span class="switch-handle"></span>
+                        </label>
                     </div>
-                    <label for="darkMode" class="switch">
-                        <input type="checkbox" id="darkMode" class="switch-input w-8 h-8">
-                        <span class="switch-label"></span>
-                        <span class="switch-handle"></span>
-                    </label>
-                </div>
-                <!-- Activar/Desactivar Modo Guía -->
-                <div class="flex items-center justify-between mb-3">
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-question-circle text-2xl text-[#1DAFDF]"></i> <!-- Icono junto al texto -->
-                        <span class="text-lg text-gray-700">Modo Guía</span>
-                    </div>
-                    <label for="guideMode" class="switch">
-                        <input type="checkbox" id="guideMode" class="switch-input w-8 h-8" checked>
-                        <span class="switch-label"></span>
-                        <span class="switch-handle"></span>
-                    </label>
+                    <!-- Activar/Desactivar Modo Guía -->
+                    <!--<div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-question-circle text-2xl text-[#1DAFDF]"></i>
+                            <span class="text-lg text-gray-700">Modo Guía</span>
+                        </div>
+                        <label for="guideMode" class="switch">
+                            <input type="checkbox" id="guideMode" class="switch-input w-8 h-8" checked>
+                            <span class="switch-label"></span>
+                            <span class="switch-handle"></span>
+                        </label>
+                    </div>-->
                 </div>
             </div>
-        </div>
 
-        <!-- Bloque de perfil (60%) -->
-        <div class="w-3/5">
-            <!-- Avatar + Info -->
-            <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-                <img src="{{ user['picture'] if user['picture'] else url_for('static', filename='images/default_profile.png') }}" alt="Avatar" class="w-40 h-40 rounded-full shadow border-2 border-[#1DAFDF]">
-                <div>
+            <!-- Bloque de perfil (60%) -->
+            <div class="w-3/5">
+                <!-- Avatar + Info -->
+                <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
+                    <img src="{{ user['picture'] if user['picture'] else url_for('static', filename='images/default_profile.png') }}" alt="Avatar" class="w-40 h-40 rounded-full shadow border-2 border-[#1DAFDF]">
+                    <div>
+                        {% if user %}
+
+                        <h1 class="text-3xl font-bold text-[#1DAFDF]">{{ user['name'] }}</h1>
+                        <p class="text-gray-600 text-xl">{{ user['email'] }}</p>
+
+                        {% else %}
+                        <h1 class="text-2xl font-bold text-[#1DAFDF]">Inicie sesión para ver su perfil</h1>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="mt-10 flex flex-col sm:flex-row justify-between gap-4">
+
+                    <!-- Botón Cerrar sesión -->
+                    <a href="{{ url_for('auth.logout') }}"
+                       class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2">
+                        <i class="fas fa-sign-out-alt text-lg"></i> Cerrar sesión
+                    </a>
+
                     {% if user %}
-
-                    <h1 class="text-3xl font-bold text-[#1DAFDF]">{{ user['name'] }}</h1>
-                    <p class="text-gray-600 text-xl">{{ user['email'] }}</p>
-
+                    <!-- Botón Regresar -->
+                    <a href="{{ url_for('carga_pd.pd_carga') }}"
+                       class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2">
+                        <i class="fas fa-arrow-left text-lg"></i> Regresar
+                    </a>
                     {% else %}
-                    <h1 class="text-2xl font-bold text-[#1DAFDF]">Inicie sesión para ver su perfil</h1>
+                    <!-- Botón Iniciar sesión -->
+                    <a href="{{ url_for('auth.login') }}"
+                       class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2">
+                        <i class="fas fa-sign-in-alt text-lg"></i> Iniciar sesión
+                    </a>
                     {% endif %}
-
                 </div>
+
             </div>
-
-            <!-- Botones -->
-            <div class="mt-10 flex flex-col sm:flex-row justify-between gap-4">
-
-                <!-- Botón Cerrar sesión -->
-                <a href="{{ url_for('auth.logout') }}"
-                   class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2">
-                    <i class="fas fa-sign-out-alt text-lg"></i> Cerrar sesión
-                </a>
-
-                {% if user %}
-                <!-- Botón Regresar -->
-                <a href="{{ url_for('carga_pd.pd_carga') }}"
-                   class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2">
-                    <i class="fas fa-arrow-left text-lg"></i> Regresar
-                </a>
-                {% else %}
-                <!-- Botón Iniciar sesión -->
-                <a href="{{ url_for('auth.login') }}"
-                   class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2">
-                    <i class="fas fa-sign-in-alt text-lg"></i> Iniciar sesión
-                </a>
-                {% endif %}
-            </div>
-
         </div>
     </div>
 </div>
+
 {% endblock %}

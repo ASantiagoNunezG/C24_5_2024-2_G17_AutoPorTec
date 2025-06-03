@@ -30,6 +30,7 @@
             Cursos
         </h1>
     </div>
+    <p class="text-xl text-[#1DAFDF] py-5 p-10"> Elige el curso y dale a Recopilar Material para poder generar el Portafolio Digital que se cargará a Google Drive.</p>
 
     {% if cursos %}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
@@ -49,7 +50,7 @@
             <p class="text-sm text-gray-500 mb-3">Código: {{ curso.course_code }}</p>
 
             <!-- Formulario para recopilar materiales del curso -->
-            <form action="{{ url_for('canvaslms.recopilar_material_ruta', curso_id=curso.id) }}" method="POST" class="space-y-2 mt-auto">
+            <form action="{{ url_for('canvaslms.recopilar_material_ruta', curso_id=curso.id) }}" method="POST" class="space-y-2 mt-auto" onsubmit="return recopilarMaterial(event, this)">
                 <div>
                     <label for="carpeta_nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre de la carpeta:</label>
                     <input type="text" id="carpeta_nombre" name="carpeta_nombre" value="{{ curso.name }}" required
@@ -70,40 +71,105 @@
     {% endif %}
 
     <!-- Barra de navegación -->
-    <div class="flex justify-between items-center w-full max-w-6xl mt-10 px-4">
-        <button disabled class="bg-gray-300 text-white py-2 px-6 rounded cursor-not-allowed opacity-70">
-            ← Anterior
-        </button>
+    <div class="flex justify-start items-center w-full max-w-6xl mt-10 px-4">
+
         <a href="{{ url_for('portafoliod.portafolio') }}"
            class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold transition">
-            Siguiente →
+            ← Anterior
         </a>
     </div>
 </div>
 
 
-<!-- Overlay global -->
+<!-- Overlay global loader -->
 <div id="overlay-loader" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-        <p class="text-lg font-semibold text-gray-700 mb-4">Recopilando materiales... ⏳</p>
+    <div class="bg-white p-6 rounded-lg shadow-lg text-center relative max-w-xs w-full">
+        <button onclick="ocultarOverlay()" aria-label="Cerrar"
+                class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-xl font-bold leading-none">&times;</button>
+        <p class="text-lg font-semibold text-gray-700 mb-4">Recopilando materiales y organizando el Portafolio Digital ⏳</p>
         <div class="loader mx-auto mb-4"></div>
-        <button onclick="ocultarOverlay()" class="mt-2 text-sm text-blue-500 hover:underline">Cerrar</button>
     </div>
 </div>
+
+<!-- Modal de éxito -->
+<div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-60 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm relative w-full mx-4">
+        <button onclick="cerrarModal()" aria-label="Cerrar"
+                class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-xl font-bold leading-none">&times;</button>
+        <p class="text-lg font-semibold text-green-600 mb-4">Portafolio Digital subido exitosamente. ✅</p>
+        <a id="link-carpeta-drive" href="#" target="_blank"
+           class="inline-block bg-[#1DAFDF] hover:bg-[#37AFE1] text-white font-bold py-2 px-4 rounded transition">
+            Ir a la carpeta - Google Drive
+        </a>
+    </div>
+</div>
+
+
 <!--JavaScript para animar el overlay-->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const forms = document.querySelectorAll('form[action*="recopilar_material"]');
-    forms.forEach(form => {
-        form.addEventListener('submit', function () {
-            document.getElementById('overlay-loader').classList.remove('hidden');
-            });
-        });
-    });
+    async function recopilarMaterial(event, form) {
+    event.preventDefault();  // evitar submit normal
+    const overlay = document.getElementById('overlay-loader');
+    overlay.classList.remove('hidden');
 
-    function ocultarOverlay() {
-        document.getElementById('overlay-loader').classList.add('hidden');
+    const url = form.action;
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData,
+            credentials: 'same-origin'  // para enviar cookies/sesiones
+        });
+
+        if (!response.ok) {
+            const text = await response.text();
+            alert("Error: " + text);
+            overlay.classList.add('hidden');
+            return false;
+        }
+
+        // Recibimos texto que incluye el enlace generado en backend
+        const text = await response.text();
+
+        // Extraemos el id de carpeta Drive del texto recibido (puedes mejorar esta parte)
+        // Por ejemplo, el backend devuelve: 'Material subido exitosamente. <a href="https://drive.google.com/drive/folders/XYZ" target="_blank">Ver carpeta en Drive</a>'
+        // Vamos a extraer la URL con regex simple:
+        const urlRegex = /href=['"]([^'"]+)['"]/;
+        const match = text.match(urlRegex);
+        let carpetaUrl = "#";
+        if (match && match[1]) {
+            carpetaUrl = match[1];
+        }
+
+        // Mostrar modal con enlace actualizado
+        const modal = document.getElementById('success-modal');
+        const link = document.getElementById('link-carpeta-drive');
+        link.href = carpetaUrl;
+
+        modal.classList.remove('hidden');
+
+        // Ocultar loader
+        overlay.classList.add('hidden');
+
+
+
+    } catch (error) {
+        alert("Error en la petición: " + error);
+        overlay.classList.add('hidden');
     }
+
+    return false;  // evitar submit
+    }
+
+    function cerrarModal() {
+        const modal = document.getElementById('success-modal');
+        modal.classList.add('hidden');
+    }
+    function ocultarOverlay() {
+            const overlay = document.getElementById('overlay-loader');
+            overlay.classList.add('hidden');
+      }
 </script>
 
 {% endblock %}

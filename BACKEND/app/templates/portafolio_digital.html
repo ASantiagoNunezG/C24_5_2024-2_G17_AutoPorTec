@@ -34,43 +34,51 @@
         <h1 class="text-3xl text-[#1DAFDF] font-bold">
             Portafolio Digital
         </h1>
+
     </div>
+    <p class="text-xl text-[#1DAFDF] py-5 p-10"> Tienes la opción de que cuando se genere el Portafolio Digital este por defecto se almacene en la raíz de tu unidad (imagen 1) o dentro de una carpeta específica (imagen 2).</p>
+    <div class="bg-[#FFFECB] border border-[#1DAFDF] rounded-xl shadow-md hover:shadow-xl transition duration-200 w-full max-w-4xl">
 
-    <div class="flex flex-col md:flex-row bg-[#FFFECB] border border-[#1DAFDF] rounded-xl shadow-md hover:shadow-xl transition duration-200 w-full max-w-4xl">
-
-        <!-- Imagen -->
-        <div class="md:w-1/2 w-full p-4">
-            <img src="{{ url_for('static', filename='images/portafolio_digital.png') }}" alt="Portafolio Digital"
-                 class="object-cover w-full h-auto rounded-xl border border-[#1DAFDF]">
+        <!-- Contenedor imágenes en fila -->
+        <div class="flex flex-row gap-4 p-4">
+            <!-- Imagen 1 -->
+            <div class="w-1/2">
+                <img src="{{ url_for('static', filename='images/carpeta_root.png') }}" alt="Portafolio Digital"
+                     class="object-cover w-full h-auto rounded-xl border border-[#1DAFDF]">
+            </div>
+            <!-- Imagen 2 (añade aquí la segunda imagen) -->
+            <div class="w-1/2">
+                <img src="{{ url_for('static', filename='images/seleccion_carpeta.png') }}" alt="Otra imagen"
+                     class="object-cover w-full h-auto rounded-xl border border-[#1DAFDF]">
+            </div>
         </div>
 
-        <!-- Formulario -->
-        <div class="md:w-1/2 w-full p-4 flex flex-col justify-center">
-            <div>
-                <button onclick="loadPicker()"
-                        class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md transition">
-                    Seleccionar carpeta
-                </button>
-                <form id="folderForm" method="POST" action="{{ url_for('portafoliod.save_folder') }}" class="hidden">
-                    <input type="hidden" name="folderId" id="folderIdInput">
-                    <input type="hidden" name="folderName" id="folderNameInput">
-                </form>
-            </div>
-
+        <!-- Botón debajo de las imágenes, centrado -->
+        <div class="flex justify-center p-4">
+            <button onclick="loadPicker()"
+                    class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md transition">
+                Seleccionar carpeta
+            </button>
+            <form id="folderForm" method="POST" action="{{ url_for('portafoliod.save_folder') }}" class="hidden">
+                <input type="hidden" name="folderId" id="folderIdInput">
+                <input type="hidden" name="folderName" id="folderNameInput">
+            </form>
         </div>
 
     </div>
 
 </div>
+
 
 
 <!-- Barra de navegación -->
-<div class="flex justify-between mt-2 p-4">
+<div class="flex justify-end mt-2 p-4">
     <a href="{{ url_for('canvaslms.canvas') }}"
-       class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold">← Anterior</a>
-    <a href="#"
-       class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold">Siguiente →</a>
+       class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold shadow-md transition">
+        Siguiente →
+    </a>
 </div>
+
 
 <script>
     setTimeout(() => {
