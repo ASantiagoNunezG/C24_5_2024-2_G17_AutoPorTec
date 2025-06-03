@@ -13,3 +13,5 @@ credentials2.json
 
 # Configuraciones del editor PyCharm / JetBrains
 .idea/
+
+node_modules/
