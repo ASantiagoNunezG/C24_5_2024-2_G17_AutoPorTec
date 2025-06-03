@@ -9,59 +9,77 @@
     <link rel="icon" href="{{ url_for('static', filename='images/logo_autoportec.png') }}" type="image/png">
     <title>AutoPorTec</title>
     <!--Tailwind {cambiar cuando se despliegue en producción}-->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='dist/output.css')}}">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <!-- Intro.js CSS -->
     <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
-
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+       if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+           document.documentElement.classList.add('dark');
+       } else {
+           document.documentElement.classList.remove('dark')
+       }
+    </script>
 
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-gray-800 dark:text-white">
 
-    <!-- Contenido principal ocupa todo el espacio disponible -->
-    <main class="flex-grow flex">
-
-        <!-- Barra lateral (20%) -->
-        <aside class="w-1/5 border-r-2 border-[#1DAFDF] flex flex-col justify-between bg-[#F5F4B3] text-black p-4">
-            <div>
-                <!-- Logo y título -->
-                <div class="flex items-center max-w-full px-4 py-2 overflow-hidden mt-5">
-                    <a href="{{ url_for('home.inicio') }}" class="flex items-center w-full space-x-4">
-                        <div class="w-1/4 max-w-[100px]">
-                            <img src="{{ url_for('static', filename='images/logo_autoportec.png') }}" alt="Logo" class="w-full h-auto object-contain">
-                        </div>
-                        <h2 class="w-3/4 text-2xl md:text-3xl font-bold text-black truncate">AutoPorTec</h2>
-                    </a>
-                </div>
-                <!--Menú de navegación lateral-->
-                <h1 class="text-xl font-bold mb-6 text-center mt-16">Menú</h1>
-                <nav class="flex flex-col space-y-3">
-                    <a href="{{ url_for('carga_pd.pd_carga') }}" class="hover:bg-[#FFFFFF] hover:text-[#37AFE1] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFECB] p-4 text-lg rounded">Carga del PD</a>
-                    <a href="{{ url_for('perfil.profile') }}" class="hover:bg-[#FFFFFF] hover:text-[#37AFE1] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFECB] p-4 text-lg rounded">Perfil</a>
-                    <a href="{{ url_for('ayuda.help') }}" class="hover:bg-[#FFFFFF] hover:text-[#37AFE1] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFECB] p-4 text-lg rounded flex items-center space-x-2">
-                        <img src="{{ url_for('static', filename='images/help.png') }}" class="w-5 h-5" alt="Ayuda">
-                        <span>Ayuda</span>
-                    </a>
-                </nav>
+<main class="flex-grow flex">
+    <aside class="w-1/5 border-r-2 border-[#1DAFDF] flex flex-col justify-between bg-[#F5F4B3] text-black dark:bg-gray-900 dark:text-white p-4">
+        <div>
+            <!-- Logo y título -->
+            <div class="flex items-center max-w-full px-4 py-2 overflow-hidden mt-5">
+                <a href="{{ url_for('home.inicio') }}" class="flex items-center w-full space-x-4">
+                    <div class="w-1/4 max-w-[100px]">
+                        <picture>
+                            <img src="{{ url_for('static', filename='images/logo_autoportec.png') }}"
+                                 alt="Logo"
+                                 class="w-full h-auto object-contain dark:invert">
+                        </picture>
+                    </div>
+                    <h2 class="w-3/4 text-2xl md:text-3xl font-bold text-black dark:text-white truncate">AutoPorTec</h2>
+                </a>
             </div>
-            <!-- Pie de barra lateral -->
-            <div class="mt-10">
-                <img src="{{ url_for('static', filename='images/logo-tecsup.png') }}" alt="Logo" class="w-full">
-            </div>
-        </aside>
 
-        <!-- Contenido dinámico (80%) -->
-        <div class="w-4/5">
-            {% block content %}
-            {% endblock %}
+            <!-- Menú lateral -->
+            <h1 class="text-xl font-bold mb-6 text-center mt-16">Menú</h1>
+            <nav class="flex flex-col space-y-3">
+                <a href="{{ url_for('carga_pd.pd_carga') }}"
+                   class="hover:bg-[#E0F7FF] hover:text-[#1DAFDF] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFAE6] text-black dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-[#37AFE1] dark:text-white p-4 text-lg rounded flex items-center space-x-2">
+                    <i class="fas fa-upload"></i>
+                    <span>Carga del PD</span>
+                </a>
+                <a href="{{ url_for('perfil.profile') }}"
+                   class="hover:bg-[#E0F7FF] hover:text-[#1DAFDF] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFAE6] text-black dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-[#37AFE1] dark:text-white p-4 text-lg rounded flex items-center space-x-2">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Perfil</span>
+                </a>
+                <a href="{{ url_for('ayuda.help') }}"
+                   class="hover:bg-[#E0F7FF] hover:text-[#1DAFDF] hover:font-bold border-2 border-[#1DAFDF] bg-[#FFFAE6] text-black dark:bg-gray-800 dark:hover:bg-gray-700 dark:border-[#37AFE1] dark:text-white p-4 text-lg rounded flex items-center space-x-2">
+                    <i class="fas fa-circle-question"></i>
+                    <span>Ayuda</span>
+                </a>
+            </nav>
         </div>
-    </main>
 
-    <!-- Footer siempre al final -->
-    <footer id="footer" class="bg-[#F5F4B3] text-black p-4 text-center border-t-2 border-[#1DAFDF]">
-        &copy; Copyright 2025, by Nuñez.
-    </footer>
+        <!-- Pie de barra lateral -->
+        <div class="mt-10">
+            <img src="{{ url_for('static', filename='images/logo-tecsup.png') }}" alt="Logo" class="w-full">
+        </div>
+    </aside>
+
+    <div class="w-4/5">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+
+<footer id="footer" class="bg-[#F5F4B3] text-gray-900 dark:bg-gray-900 dark:text-white p-4 text-center border-t-2 border-[#1DAFDF]">
+    &copy; Copyright 2025, by Nuñez.
+</footer>
 
     <!-- Intro.js JS -->
     <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
@@ -104,5 +122,49 @@
         });
     </script>
 
+    <script>
+
+
+        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+// Change the icons inside the button based on previous settings
+if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    themeToggleLightIcon.classList.remove('hidden');
+} else {
+    themeToggleDarkIcon.classList.remove('hidden');
+}
+
+var themeToggleBtn = document.getElementById('theme-toggle');
+
+themeToggleBtn.addEventListener('click', function() {
+
+    // toggle icons inside button
+    themeToggleDarkIcon.classList.toggle('hidden');
+    themeToggleLightIcon.classList.toggle('hidden');
+
+    // if set via local storage previously
+    if (localStorage.getItem('color-theme')) {
+        if (localStorage.getItem('color-theme') === 'light') {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        }
+
+    // if NOT set via local storage previously
+    } else {
+        if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('color-theme', 'dark');
+        }
+    }
+
+});
+    </script>
 </body>
 </html>

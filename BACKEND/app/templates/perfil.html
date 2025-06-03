@@ -3,92 +3,100 @@
 
 {% block content %}
 <!-- Botón Volver -->
-<div class="py-5 px-5 max-w-5xl mx-auto">
+<div class="py-5 px-5 max-w-5xl  mx-auto bg-white dark:bg-gray-800 ">
     <div class="mt-10">
-        <a href="{{ url_for('carga_pd.pd_carga') }}" class="inline-block bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md transition">
+        <a href="{{ url_for('carga_pd.pd_carga') }}"
+           class="inline-block bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md transition">
             ← Volver
         </a>
     </div>
-    <h1 class="text-4xl font-bold text-[#1DAFDF] mb-10 text-center pt-20">Mi Perfil</h1>
-    <div class="py-2 flex justify-center items-center">
 
-        <div class="w-full max-w-screen-lg bg-white rounded-xl shadow-lg p-8 flex gap-8">
+    <h1 class="text-4xl font-bold text-[#1DAFDF] mb-10 text-center pt-20">Mi Perfil</h1>
+
+    <div class="py-2 flex w-full justify-center items-center">
+        <div class="w-full max-w-screen-lg bg-white dark:bg-gray-900 rounded-xl shadow-lg p-8 flex flex-col sm:flex-row gap-8">
+
             <!-- Configuraciones (40%) -->
-            <div class="w-2/5 bg-gray-50 rounded-lg p-6 shadow-md">
-                <h3 class="text-2xl font-semibold text-[#1DAFDF] mb-4">Configuraciones</h3>
-                <div class="space-y-4">
-                    <!-- Activar/Desactivar Modo Oscuro -->
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-moon text-2xl text-[#1DAFDF]"></i> <!-- Icono junto al texto -->
-                            <span class="text-lg text-gray-700">Modo Oscuro</span>
-                        </div>
-                        <label for="darkMode" class="switch">
-                            <input type="checkbox" id="darkMode" class="switch-input w-8 h-8">
-                            <span class="switch-label"></span>
-                            <span class="switch-handle"></span>
-                        </label>
+            <div class="sm:w-2/5 bg-gray-50 dark:bg-gray-700 rounded-lg p-6 shadow-md flex flex-col">
+                <h3 class="text-2xl font-semibold text-[#1DAFDF] mb-6">Configuraciones</h3>
+
+                <!-- Modo Oscuro -->
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-moon text-2xl text-[#1DAFDF]"></i>
+                        <span class="text-lg text-gray-700 dark:text-gray-300">Modo Oscuro</span>
                     </div>
-                    <!-- Activar/Desactivar Modo Guía -->
-                    <!--<div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-question-circle text-2xl text-[#1DAFDF]"></i>
-                            <span class="text-lg text-gray-700">Modo Guía</span>
-                        </div>
-                        <label for="guideMode" class="switch">
-                            <input type="checkbox" id="guideMode" class="switch-input w-8 h-8" checked>
-                            <span class="switch-label"></span>
-                            <span class="switch-handle"></span>
-                        </label>
-                    </div>-->
+                    <button id="theme-toggle" type="button"
+                            class="bg-white dark:bg-black text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 rounded-lg p-2.5 transition">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                    d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z">
+                            </path>
+                        </svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                    fill-rule="evenodd" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
                 </div>
+
+                <!-- Puedes añadir más configuraciones aquí -->
+
             </div>
 
             <!-- Bloque de perfil (60%) -->
-            <div class="w-3/5">
-                <!-- Avatar + Info -->
-                <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-                    <img src="{{ user['picture'] if user['picture'] else url_for('static', filename='images/default_profile.png') }}" alt="Avatar" class="w-40 h-40 rounded-full shadow border-2 border-[#1DAFDF]">
+            <div class="sm:w-3/5 flex flex-col gap-8">
+                <!-- Avatar e Info -->
+                <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+                    <img src="{{ user['picture'] if user['picture'] else url_for('static', filename='images/default_profile.png') }}"
+                         alt="Avatar" class="w-40 h-40 rounded-full shadow border-2 border-[#1DAFDF]" />
                     <div>
                         {% if user %}
-
                         <h1 class="text-3xl font-bold text-[#1DAFDF]">{{ user['name'] }}</h1>
-                        <p class="text-gray-600 text-xl">{{ user['email'] }}</p>
-
+                        <p class="text-gray-600 dark:text-gray-300 text-xl">{{ user['email'] }}</p>
                         {% else %}
                         <h1 class="text-2xl font-bold text-[#1DAFDF]">Inicie sesión para ver su perfil</h1>
                         {% endif %}
-
                     </div>
                 </div>
 
                 <!-- Botones -->
-                <div class="mt-10 flex flex-col sm:flex-row justify-between gap-4">
-
-                    <!-- Botón Cerrar sesión -->
+                <div class="flex flex-col sm:flex-row justify-between gap-4">
                     <a href="{{ url_for('auth.logout') }}"
-                       class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2">
+                       class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2 transition">
                         <i class="fas fa-sign-out-alt text-lg"></i> Cerrar sesión
                     </a>
 
                     {% if user %}
-                    <!-- Botón Regresar -->
                     <a href="{{ url_for('carga_pd.pd_carga') }}"
-                       class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2">
+                       class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2 transition">
                         <i class="fas fa-arrow-left text-lg"></i> Regresar
                     </a>
                     {% else %}
-                    <!-- Botón Iniciar sesión -->
                     <a href="{{ url_for('auth.login') }}"
-                       class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2">
+                       class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg shadow flex items-center justify-center gap-2 transition">
                         <i class="fas fa-sign-in-alt text-lg"></i> Iniciar sesión
                     </a>
                     {% endif %}
                 </div>
-
             </div>
+
+        </div>
+    </div>
+    <!-- Barra de navegación con fondo completo y botón alineado a la derecha -->
+    <div class="bg-white dark:bg-gray-800 w-full py-5 px-5">
+        <div class="max-w-6xl mx-auto flex justify-end items-center">
+            <a href="{{ url_for('portafoliod.portafolio') }}"
+               class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold transition flex items-center space-x-2">
+                <i class="fas fa-arrow-right"></i>
+                <span>Siguiente</span>
+            </a>
         </div>
     </div>
 </div>
+
 
 {% endblock %}

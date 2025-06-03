@@ -2,66 +2,60 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<div class="py-10 flex justify-center items-center">
-
-    <div class="w-full max-w-screen-md">
-
-        <h1 class="text-3xl font-bold text-[#1DAFDF] mb-5 text-center">Centro de Ayuda</h1>
-
-        <!--Los cuatro cards-->
+<div class="py-10 flex h-full justify-center items-center bg-white dark:bg-gray-900 transition-colors duration-500">
+    <div class="w-full max-w-screen-md px-4">
+        <h1 class="text-4xl font-extrabold text-center mb-10 text-[#1DAFDF] dark:text-[#82d1f5]">
+            Centro de Ayuda
+        </h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
 
             <!-- Preguntas Frecuentes -->
-            <div class="bg-[#E0F7FF] rounded-xl p-6 shadow-lg text-center hover:shadow-xl transition flex flex-col justify-between h-full">
-                <i class="fas fa-question-circle text-4xl text-[#1DAFDF] mb-4"></i>
-                <h2 class="text-xl font-semibold mb-2">Preguntas Frecuentes</h2>
-                <p class="text-gray-600 mb-4">Respuestas rápidas a tus dudas más comunes.</p>
+            <div class="group bg-white shadow-md rounded-2xl p-6 border border-gray-200 dark:bg-gray-800 dark:border-[#1DAFDF] dark:bg-opacity-20 dark:backdrop-blur-md text-center transition-transform duration-300 hover:scale-105">
+                <i class="fas fa-question-circle text-4xl text-[#1DAFDF] dark:text-[#82d1f5] mb-4"></i>
+                <h2 class="text-2xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Preguntas Frecuentes</h2>
+                <p class="text-sm text-gray-700 dark:text-gray-300 mb-6">Respuestas rápidas a tus dudas más comunes.</p>
                 <a href="{{ url_for('ayuda.preguntas_frecuentes') }}">
-                    <button class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg">
+                    <button class="bg-[#1DAFDF] hover:bg-[#37AFE1] dark:bg-[#1DAFDF] dark:hover:bg-[#37AFE1] text-white font-semibold py-2 px-4 rounded-lg transition">
                         Ver más
                     </button>
                 </a>
             </div>
 
             <!-- Recorrido Guiado -->
-            <div class="bg-[#E0F7FF] rounded-xl p-6 shadow-lg text-center hover:shadow-xl transition flex flex-col justify-between h-full">
-                <i class="fas fa-route text-4xl text-[#1DAFDF] mb-4"></i>
-                <h2 class="text-xl font-semibold mb-2">Recorrido Guiado</h2>
-                <p class="text-gray-600 mb-4">Aprende a usar la plataforma paso a paso.</p>
-                <div class="text-center">
-                    <button type="button" id="btn-tour" class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md w-48 ">
-                        Iniciar Recorrido
-                    </button>
-                </div>
+            <div class="group bg-white shadow-md rounded-2xl p-6 border border-gray-200 dark:bg-gray-800 dark:border-[#1DAFDF] dark:bg-opacity-20 dark:backdrop-blur-md text-center transition-transform duration-300 hover:scale-105">
+                <i class="fas fa-route text-4xl text-[#1DAFDF] dark:text-[#82d1f5] mb-4"></i>
+                <h2 class="text-2xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Recorrido Guiado</h2>
+                <p class="text-sm text-gray-700 dark:text-gray-300 mb-6">Aprende a usar la plataforma paso a paso.</p>
+                <button id="btn-tour" class="bg-[#1DAFDF] hover:bg-[#37AFE1] dark:bg-[#1DAFDF] dark:hover:bg-[#37AFE1] text-white font-semibold py-2 px-4 rounded-lg transition w-48">
+                    Iniciar Recorrido
+                </button>
             </div>
 
             <!-- Manual -->
-            <div class="bg-[#E0F7FF] rounded-xl p-6 shadow-lg text-center hover:shadow-xl transition flex flex-col justify-between h-full">
-                <i class="fas fa-book text-4xl text-[#1DAFDF] mb-4"></i>
-                <h2 class="text-xl font-semibold mb-2">Manual</h2>
-                <p class="text-gray-600 mb-4">Consulta el manual detallado de funciones.</p>
+            <div class="group bg-white shadow-md rounded-2xl p-6 border border-gray-200 dark:bg-gray-800 dark:border-[#1DAFDF] dark:bg-opacity-20 dark:backdrop-blur-md text-center transition-transform duration-300 hover:scale-105">
+                <i class="fas fa-book text-4xl text-[#1DAFDF] dark:text-[#82d1f5] mb-4"></i>
+                <h2 class="text-2xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Manual</h2>
+                <p class="text-sm text-gray-700 dark:text-gray-300 mb-6">Consulta el manual detallado de funciones.</p>
                 <a href="{{ url_for('static', filename='manual.pdf') }}" download>
-                    <button class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg">
+                    <button class="bg-[#1DAFDF] hover:bg-[#37AFE1] dark:bg-[#1DAFDF] dark:hover:bg-[#37AFE1] text-white font-semibold py-2 px-4 rounded-lg transition">
                         Descargar manual
                     </button>
                 </a>
             </div>
 
             <!-- Soporte -->
-            <div class="bg-[#E0F7FF] rounded-xl p-6 shadow-lg text-center hover:shadow-xl transition flex flex-col justify-between h-full">
-                <i class="fas fa-headset text-4xl text-[#1DAFDF] mb-4"></i>
-                <h2 class="text-xl font-semibold mb-2">Soporte</h2>
-                <p class="text-gray-600 mb-4">Contáctanos si necesitas ayuda personalizada.</p>
+            <div class="group bg-white shadow-md rounded-2xl p-6 border border-gray-200 dark:bg-gray-800 dark:border-[#1DAFDF] dark:bg-opacity-20 dark:backdrop-blur-md text-center transition-transform duration-300 hover:scale-105">
+                <i class="fas fa-headset text-4xl text-[#1DAFDF] dark:text-[#82d1f5] mb-4"></i>
+                <h2 class="text-2xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Soporte</h2>
+                <p class="text-sm text-gray-700 dark:text-gray-300 mb-6">Contáctanos si necesitas ayuda personalizada.</p>
                 <a href="{{ url_for('ayuda.soporte') }}">
-                    <button class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg">
+                    <button class="bg-[#1DAFDF] hover:bg-[#37AFE1] dark:bg-[#1DAFDF] dark:hover:bg-[#37AFE1] text-white font-semibold py-2 px-4 rounded-lg transition">
                         Contactar soporte
                     </button>
                 </a>
             </div>
 
         </div>
-
     </div>
-
 </div>
 {% endblock %}

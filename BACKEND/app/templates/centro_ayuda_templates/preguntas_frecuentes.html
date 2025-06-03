@@ -15,38 +15,50 @@
     <h1 class="text-3xl font-bold text-[#1DAFDF] text-center mb-12">Preguntas Frecuentes</h1>
 
     <!-- FAQ 1 -->
-    <div class="flex flex-col md:flex-row items-center mb-12 bg-[#E0F7FF] rounded-xl shadow-md p-6">
-        <img src="{{ url_for('static', filename='images/token_steps.png') }}" alt="Token Canvas" class="w-full md:w-1/2 rounded-lg mb-4 md:mb-0 md:mr-6">
+    <div class="flex flex-col md:flex-row items-center mb-12 bg-[#E0F7FF] dark:bg-gray-800 rounded-xl shadow-md dark:shadow-gray-700 p-6 border border-[#BDEFFF] dark:border-gray-700">
+        <img src="{{ url_for('static', filename='images/token_steps.png') }}" alt="Token Canvas" class="w-full md:w-1/2 rounded-lg mb-4 md:mb-0 md:mr-6 shadow-sm dark:shadow-none">
         <div class="md:w-1/2">
-            <h2 class="text-xl font-semibold text-[#1DAFDF] mb-2">¿Cómo obtengo el token de Canvas LMS?</h2>
-            <p class="text-gray-700">Para obtener tu token de acceso de Canvas LMS, inicia sesión en tu cuenta, ve a "Configuración", luego haz clic en "Accesos" y genera un nuevo token. Este token nos permite conectarnos para obtener tus archivos del curso. Recuerda copiarlo y guardarlo en un lugar seguro.</p>
+            <h2 class="text-xl font-semibold text-[#1DAFDF] mb-2 flex items-center gap-2">
+                <i class="fas fa-key text-[#1DAFDF]"></i>
+                ¿Cómo obtengo el token de Canvas LMS?
+            </h2>
+            <p class="text-gray-700 dark:text-gray-200">Para obtener tu token de acceso de Canvas LMS, inicia sesión en tu cuenta, ve a "Configuración", luego haz clic en "Accesos" y genera un nuevo token. Este token nos permite conectarnos para obtener tus archivos del curso. Recuerda copiarlo y guardarlo en un lugar seguro.</p>
         </div>
     </div>
 
     <!-- FAQ 2 -->
-    <div class="flex flex-col md:flex-row-reverse items-center mb-12 bg-[#E0F7FF] rounded-xl shadow-md p-6">
-        <img src="{{ url_for('static', filename='images/google_drive_permissions.png') }}" alt="Permisos Google Drive" class="w-full md:w-1/2 rounded-lg mb-4 md:mb-0 md:ml-6">
+    <div class="flex flex-col md:flex-row-reverse items-center mb-12 bg-[#E0F7FF] dark:bg-gray-800 rounded-xl shadow-md dark:shadow-gray-700 p-6 border border-[#BDEFFF] dark:border-gray-700">
+        <img src="{{ url_for('static', filename='images/google_drive_permissions.png') }}" alt="Permisos Google Drive" class="w-full md:w-1/2 rounded-lg mb-4 md:mb-0 md:ml-6 shadow-sm dark:shadow-none">
         <div class="md:w-1/2">
-            <h2 class="text-xl font-semibold text-[#1DAFDF] mb-2">¿Qué permisos se solicitan al iniciar sesión con Google?</h2>
-            <p class="text-gray-700">El inicio de sesión con Google nos permite validar tu identidad de forma segura. No tenemos acceso a tu información personal ni editamos tu perfil. Solo utilizamos tu cuenta como medio de autenticación para que puedas subir archivos (Portafolio Digital) a Google Drive de manera más fácil y rápida.</p>
+            <h2 class="text-xl font-semibold text-[#1DAFDF] mb-2 flex items-center gap-2">
+                <i class="fas fa-user-shield text-[#1DAFDF]"></i>
+                ¿Qué permisos se solicitan al iniciar sesión con Google?
+            </h2>
+            <p class="text-gray-700 dark:text-gray-200">El inicio de sesión con Google nos permite validar tu identidad de forma segura. No tenemos acceso a tu información personal ni editamos tu perfil. Solo utilizamos tu cuenta como medio de autenticación para que puedas subir archivos (Portafolio Digital) a Google Drive de manera más fácil y rápida.</p>
         </div>
     </div>
 
     <!-- FAQ 3 -->
-    <div class="flex flex-col md:flex-row items-center mb-12 bg-[#E0F7FF] rounded-xl shadow-md p-6">
-        <img src="{{ url_for('static', filename='images/token_expiration.png') }}" alt="Duración del token Canvas" class="w-full md:w-1/2 rounded-lg mb-4 md:mb-0 md:mr-6">
+    <div class="flex flex-col md:flex-row items-center mb-12 bg-[#E0F7FF] dark:bg-gray-800 rounded-xl shadow-md dark:shadow-gray-700 p-6 border border-[#BDEFFF] dark:border-gray-700">
+        <img src="{{ url_for('static', filename='images/token_expiration.png') }}" alt="Duración del token Canvas" class="w-full md:w-1/2 rounded-lg mb-4 md:mb-0 md:mr-6 shadow-sm dark:shadow-none">
         <div class="md:w-1/2">
-            <h2 class="text-xl font-semibold text-[#1DAFDF] mb-2">¿Cuánto dura el token de Canvas LMS?</h2>
-            <p class="text-gray-700">La duración del token depende de la configuración de tu institución educativa. Generalmente, tiene una validez limitada. Si expira, deberás generar uno nuevo desde Canvas LMS siguiendo el mismo proceso de configuración inicial.</p>
+            <h2 class="text-xl font-semibold text-[#1DAFDF] mb-2 flex items-center gap-2">
+                <i class="fas fa-clock text-[#1DAFDF]"></i>
+                ¿Cuánto dura el token de Canvas LMS?
+            </h2>
+            <p class="text-gray-700 dark:text-gray-200">La duración del token depende de la configuración de tu institución educativa. Generalmente, tiene una validez limitada. Si expira, deberás generar uno nuevo desde Canvas LMS siguiendo el mismo proceso de configuración inicial.</p>
         </div>
     </div>
 
     <!-- FAQ 4 -->
-    <div class="flex flex-col md:flex-row-reverse items-center mb-12 bg-[#E0F7FF] rounded-xl shadow-md p-6">
-        <img src="{{ url_for('static', filename='images/log_out.png') }}" alt="Cerrar sesión" class="w-full md:w-1/2 rounded-lg mb-4 md:mb-0 md:ml-6">
+    <div class="flex flex-col md:flex-row-reverse items-center mb-12 bg-[#E0F7FF] dark:bg-gray-800 rounded-xl shadow-md dark:shadow-gray-700 p-6 border border-[#BDEFFF] dark:border-gray-700">
+        <img src="{{ url_for('static', filename='images/log_out.png') }}" alt="Cerrar sesión" class="w-full md:w-1/2 rounded-lg mb-4 md:mb-0 md:ml-6 shadow-sm dark:shadow-none">
         <div class="md:w-1/2">
-            <h2 class="text-xl font-semibold text-[#1DAFDF] mb-2">¿Es necesario cerrar sesión?</h2>
-            <p class="text-gray-700">Sí, te recomendamos cerrar sesión una vez que hayas cargado tu portafolio digital. Esto garantiza una mayor seguridad y evita accesos no autorizados a tu cuenta si estás en un equipo compartido.</p>
+            <h2 class="text-xl font-semibold text-[#1DAFDF] mb-2 flex items-center gap-2">
+                <i class="fas fa-right-from-bracket text-[#1DAFDF]"></i>
+                ¿Es necesario cerrar sesión?
+            </h2>
+            <p class="text-gray-700 dark:text-gray-200">Sí, te recomendamos cerrar sesión una vez que hayas cargado tu portafolio digital. Esto garantiza una mayor seguridad y evita accesos no autorizados a tu cuenta si estás en un equipo compartido.</p>
         </div>
     </div>
 

@@ -37,7 +37,7 @@
 
     </div>
     <p class="text-xl text-[#1DAFDF] py-5 p-10"> Tienes la opción de que cuando se genere el Portafolio Digital este por defecto se almacene en la raíz de tu unidad (imagen 1) o dentro de una carpeta específica (imagen 2).</p>
-    <div class="bg-[#FFFECB] border border-[#1DAFDF] rounded-xl shadow-md hover:shadow-xl transition duration-200 w-full max-w-4xl">
+    <div class="bg-[#E0F7FF] border border-[#1DAFDF] rounded-xl shadow-md hover:shadow-xl transition duration-200 w-full max-w-4xl dark:bg-gray-900">
 
         <!-- Contenedor imágenes en fila -->
         <div class="flex flex-row gap-4 p-4">
@@ -56,7 +56,8 @@
         <!-- Botón debajo de las imágenes, centrado -->
         <div class="flex justify-center p-4">
             <button onclick="loadPicker()"
-                    class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md transition">
+                    class="bg-[#1DAFDF] hover:bg-[#18a2c9] text-white font-semibold py-2 px-4 rounded-lg shadow-md transition flex items-center justify-center gap-2">
+                <i class="fas fa-folder-open text-lg"></i>
                 Seleccionar carpeta
             </button>
             <form id="folderForm" method="POST" action="{{ url_for('portafoliod.save_folder') }}" class="hidden">
@@ -71,12 +72,18 @@
 
 
 
-<!-- Barra de navegación -->
-<div class="flex justify-end mt-2 p-4">
-    <a href="{{ url_for('canvaslms.canvas') }}"
-       class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold shadow-md transition">
-        Siguiente →
-    </a>
+<!-- Barra de navegación con fondo completo y dos botones en los extremos -->
+<div class="bg-white dark:bg-gray-800 w-full py-5 px-5">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+        <a href="{{ url_for('perfil.profile') }}"
+           class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold shadow-md transition">
+            ← Anterior
+        </a>
+        <a href="{{ url_for('canvaslms.canvas') }}"
+           class="bg-[#1DAFDF] text-white py-2 px-6 rounded hover:bg-[#37AFE1] font-semibold shadow-md transition">
+            Siguiente →
+        </a>
+    </div>
 </div>
 
 
