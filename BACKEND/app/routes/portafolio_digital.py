@@ -1,23 +1,27 @@
 # BACKEND/app/routes/portafolio_digital.py
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.services.estructura_portafolio_service import generar_portafolio_digital
+import os
+
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
+
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 portafolio_digital = Blueprint('portafoliod', __name__)
 
 @portafolio_digital.get('/portafoliod')
 def portafolio():
-    return render_template('portafolio_digital.html')
+    google_token = session.get('google_token', {}).get('access_token')
+    return render_template('portafolio_digital.html',token=google_token, api_key=GOOGLE_API_KEY)
 
-@portafolio_digital.post('/generar_pd')  # <-- agrega la barra al inicio
-def generar_pd():
-    # Obtener nombre del formulario correctamente
-    nombre_portafolio = request.form.get('nombre_portafolio')
+#Guardar el Id de la carpeta
+@portafolio_digital.route('/save-folder', methods=['POST'])
+def save_folder():
+    folder_id = request.form.get('folderId')  # ← importante
+    folder_name = request.form.get('folderName')
 
-    if not nombre_portafolio:
-        flash("Por favor ingresa un nombre para el portafolio.", "error")
-        return redirect(url_for('portafoliod.portafolio'))
+    if folder_id:
+        session['drive_folder_id'] = folder_id
+        flash(f"✅ Carpeta [{folder_name}] seleccionada correctamente", "success")
+    else:
+        flash("❌ No se recibió el ID de la carpeta", "error")
 
-    ruta = generar_portafolio_digital(nombre_portafolio)
-
-    flash(f"Portafolio generado correctamente en: {ruta}", "success")
     return redirect(url_for('portafoliod.portafolio'))

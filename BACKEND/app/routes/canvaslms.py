@@ -57,7 +57,13 @@ def recopilar_material_ruta(curso_id):
     if not materiales:
         return "No se encontraron materiales para este curso", 404
 
-    carpeta_padre_id = '1V5vDQpMJzdeSX31zjp8QJPw_NQcrUGPv'
+    
+    folder_id = session.get('drive_folder_id')
+    if folder_id:
+        carpeta_padre_id = folder_id
+    else:
+        carpeta_padre_id = 'root'
+
     carpeta_drive_id = crear_carpeta_drive(google_token, nombre_carpeta, parent_id=carpeta_padre_id)
 
     if not carpeta_drive_id:

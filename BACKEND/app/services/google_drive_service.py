@@ -58,3 +58,20 @@ def crear_carpeta_drive(access_token, nombre_carpeta, parent_id):
     else:
         print("Error creando carpeta:", response.content)
         return None
+'''
+def listar_archivos(folder_id, token):
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    params = {
+        "q": f"'{folder_id}' in parents and trashed=false",
+        "fields": "files(id, name, mimeType, webViewLink)"
+    }
+    response = requests.get("https://www.googleapis.com/drive/v3/files", headers=headers, params=params)
+
+    if response.ok:
+        return response.json()["files"]
+    else:
+        print("Error al listar archivos:", response.text)
+        return []
+'''

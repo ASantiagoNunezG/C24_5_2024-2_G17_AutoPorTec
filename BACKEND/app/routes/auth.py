@@ -71,6 +71,7 @@ def logout():
         if response.status_code == 200:
             print("Token revocado correctamente")
             session.clear()  # Limpiar toda la sesión de Flask
+            #session.pop('google_token', None)
         else:
             print("Error al revocar el token de Google: ", response.status_code)
             return "Error al revocar el token de Google.", 400

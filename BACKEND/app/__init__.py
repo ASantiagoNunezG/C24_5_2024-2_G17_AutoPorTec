@@ -22,6 +22,7 @@ def create_app():
     # Configuraciones
     app.secret_key = "clave-super-secreta-de-auto-por-tec"
 
+
     # Configurar oauth con la app
     oauth.init_app(app)
 
@@ -36,7 +37,7 @@ def create_app():
         authorize_params=None,
         api_base_url='https://www.googleapis.com/oauth2/v2/',
         userinfo_endpoint='https://www.googleapis.com/oauth2/v2/userinfo',
-        client_kwargs={'scope': 'openid email profile https://www.googleapis.com/auth/drive.file'},
+        client_kwargs={'scope': 'openid email profile https://www.googleapis.com/auth/drive'},
         redirect_uri='http://localhost:5000/auth/callback'
     )
 
