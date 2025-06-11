@@ -13,6 +13,8 @@ def profile():
 
 
 #Punto de prueba para ver los tokens que hay en session
+"""
 @perfil.route('/ver')
 def ver_session():
     return jsonify(dict(session))
+"""
