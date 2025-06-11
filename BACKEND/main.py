@@ -1,4 +1,4 @@
-#BACKEND/app.py
+#BACKEND/main.py
 from app import create_app
 
 app = create_app()
