@@ -20,7 +20,7 @@ def create_app():
     app = Flask(__name__)
 
     # Configuraciones
-    app.secret_key = "clave-super-secreta-de-auto-por-tec"
+    app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 
     # Configurar oauth con la app
