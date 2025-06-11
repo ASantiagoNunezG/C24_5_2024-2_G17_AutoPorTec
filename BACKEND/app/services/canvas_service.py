@@ -1,11 +1,12 @@
 # BACKEND/app/services/canvas_service.py
 import requests
 from dotenv import load_dotenv
+from flask import session
 import os
 
 load_dotenv()
+#BASE_CANVAS_URL = os.getenv('TECSUP_CANVAS_URL')
 BASE_CANVAS_URL = os.getenv('BASE_CANVAS_URL')
-
 def obtener_cursos(token):
     headers = {
         "Authorization": f"Bearer {token}"
@@ -38,3 +39,14 @@ def obtener_materiales_curso(token, curso_id):
             raise Exception(f"Error al obtener archivos: {response.status_code}, {response.text}")
 
     return archivos
+
+def quitar_token_service():
+
+    canvas_token = session.get('canvas_token')
+
+    #Verificamos si el token de Canvas LMS existe
+    if(canvas_token):
+        session.pop('canvas_token', None)
+        return "Token de Canvas LMS eliminado correctamente"
+    else:
+        return "No se ha encontrado ningún token de Canvas LMS"

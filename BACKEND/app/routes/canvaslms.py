@@ -1,6 +1,6 @@
 # BACKEND/app/routes/canvaslms.py
-from flask import Blueprint, render_template, request,  send_file, session, redirect, url_for, render_template
-from app.services.canvas_service import obtener_cursos, obtener_materiales_curso
+from flask import Blueprint, flash, render_template, request,  send_file, session, redirect, url_for, render_template
+from app.services.canvas_service import obtener_cursos, obtener_materiales_curso, quitar_token_service
 from app.services.estructura_portafolio_service import crear_estructura_portafolio_drive
 from app.services.google_drive_service import crear_carpeta_drive, subir_archivo_a_drive
 import mimetypes
@@ -16,6 +16,14 @@ def canvas():
 
     return render_template('canvaslms.html')  # Formulario si no hay token
 
+@canvaslms.route('/quitar-token')
+def quitar_token():
+    mensaje = quitar_token_service()
+    if mensaje == 'Token de Canvas LMS eliminado correctamente':
+        flash(mensaje, 'success')
+    else:
+        flash(mensaje, 'danger')
+    return redirect(url_for('perfil.profile'))
 
 @canvaslms.route('/canvas/cursos', methods=['POST'])
 def mostrar_cursos():
@@ -99,3 +107,5 @@ def recopilar_material_ruta(curso_id):
 
     enlace = f"https://drive.google.com/drive/folders/{carpeta_drive_id}"
     return f"Material subido exitosamente. <a href='{enlace}' target='_blank'>Ver carpeta en Drive</a>"
+
+

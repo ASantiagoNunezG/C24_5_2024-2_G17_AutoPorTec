@@ -1,5 +1,7 @@
 #BACKEND/app/routes/ayuda.py
-'''Aquí estarán las rutas para la parte de ayuda'''
+
+#Aquí estarán las rutas para la parte de ayuda
+
 
 from flask import Blueprint, render_template
 
