@@ -1,8 +1,13 @@
 # BACKEND/app/routes/canvaslms.py
-from flask import Blueprint, flash, render_template, request,  send_file, session, redirect, url_for, render_template
+from wsgiref.util import request_uri
+
+from flask import Blueprint, flash, request, send_file, session, redirect, url_for, render_template, \
+    jsonify
 from app.services.canvas_service import obtener_cursos, obtener_materiales_curso, quitar_token_service
-from app.services.estructura_portafolio_service import crear_estructura_portafolio_drive
-from app.services.google_drive_service import crear_carpeta_drive, subir_archivo_a_drive
+from app.services.carpetas import switch_clasificacion_archivo
+from app.services.google_drive_service import subir_archivo_a_drive, archivo_existe_en_drive
+from app.services.estructura_portafolio_service import buscar_o_crear_carpeta, crear_o_obtener_carpeta_de_ruta, \
+    estructura_portafolio_digital, crear_estructura_con_lookup
 import mimetypes
 import requests  # se importa por separado
 from urllib.parse import unquote_plus
@@ -28,7 +33,7 @@ def quitar_token():
 @canvaslms.route('/canvas/cursos', methods=['POST'])
 def mostrar_cursos():
     token = request.form.get('token')  # o request.args.get si es GET
-
+    session.permanent = True # Activando el temporizador para el token de Canvas LMS
     # Guarda el token en la sesión del usuario
     session['canvas_token'] = token
 
@@ -72,14 +77,14 @@ def recopilar_material_ruta(curso_id):
     else:
         carpeta_padre_id = 'root'
 
-    carpeta_drive_id = crear_carpeta_drive(google_token, nombre_carpeta, parent_id=carpeta_padre_id)
+    carpeta_drive_id = buscar_o_crear_carpeta(google_token, nombre_carpeta, carpeta_padre_id)
 
     if not carpeta_drive_id:
         return "Error al crear carpeta en Drive", 500
 
     # Crear estructura de carpetas del portafolio y obtener IDs
-    from app.services.estructura_portafolio_service import clasificar_archivo
-    carpetas_ids = crear_estructura_portafolio_drive(google_token, carpeta_drive_id)
+    estructura = estructura_portafolio_digital()
+    carpetas_ids = crear_estructura_con_lookup(google_token, carpeta_drive_id, estructura)
 
     # Subir archivos a la carpeta según clasificación
     for material in materiales:
@@ -98,8 +103,9 @@ def recopilar_material_ruta(curso_id):
             tipo_mime = 'application/octet-stream'
 
         # Clasificar archivo para saber carpeta destino
-        carpeta_destino = clasificar_archivo(nombre_archivo)
-        carpeta_id_destino = carpetas_ids.get(carpeta_destino) or carpetas_ids.get('Material Complementario')
+        carpeta_destino = switch_clasificacion_archivo(nombre_archivo)
+        carpeta_id_destino = crear_o_obtener_carpeta_de_ruta(google_token, carpeta_destino, carpetas_ids, carpeta_drive_id)
+
 
         resultado = subir_archivo_a_drive(google_token, nombre_archivo, contenido, tipo_mime, carpeta_id_destino)
         if not resultado:

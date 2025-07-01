@@ -1,5 +1,7 @@
 # BACKEND/app/__init__.py
 import os
+from datetime import timedelta
+
 from flask import Flask
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
@@ -21,7 +23,7 @@ def create_app():
 
     # Configuraciones
     app.secret_key = os.getenv("FLASK_SECRET_KEY")
-
+    app.permanent_session_lifetime = timedelta(minutes=30)
 
     # Configurar oauth con la app
     oauth.init_app(app)
@@ -38,8 +40,8 @@ def create_app():
         api_base_url='https://www.googleapis.com/oauth2/v2/',
         userinfo_endpoint='https://www.googleapis.com/oauth2/v2/userinfo',
         client_kwargs={'scope': 'openid email profile https://www.googleapis.com/auth/drive'},
-        #redirect_uri='http://localhost:5000/auth/callback'
-        redirect_uri='https://autoportec.asnunezg.com/auth/callback' # Producción
+        redirect_uri='http://localhost:5000/auth/callback' # Desarrollo
+        #redirect_uri='https://autoportec.asnunezg.com/auth/callback' # Producción
     )
 
     # Ahora, importamos y registramos el blueprint de autenticación

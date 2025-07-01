@@ -58,20 +58,47 @@ def crear_carpeta_drive(access_token, nombre_carpeta, parent_id):
     else:
         print("Error creando carpeta:", response.content)
         return None
-'''
-def listar_archivos(folder_id, token):
-    headers = {
-        "Authorization": f"Bearer {token}"
-    }
-    params = {
-        "q": f"'{folder_id}' in parents and trashed=false",
-        "fields": "files(id, name, mimeType, webViewLink)"
-    }
-    response = requests.get("https://www.googleapis.com/drive/v3/files", headers=headers, params=params)
 
-    if response.ok:
-        return response.json()["files"]
+
+def listar_carpetas_drive(access_token, parent_id):
+    url = "https://www.googleapis.com/drive/v3/files"
+    headers = {
+        "Authorization": f"Bearer {access_token}"
+    }
+    query = (
+        f"'{parent_id}' in parents and "
+        f"mimeType = 'application/vnd.google-apps.folder' and "
+        f"trashed = false"
+    )
+
+    params = {
+        "q": query,
+        "fields": "files(id, name)",
+        "pageSize": 1000
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code == 200:
+        return response.json().get("files", [])
     else:
-        print("Error al listar archivos:", response.text)
+        print("Error al listar carpetas:", response.text)
         return []
-'''
+
+def archivo_existe_en_drive(access_token, folder_id, nombre_archivo):
+    url = "https://www.googleapis.com/drive/v3/files"
+    headers = {"Authorization": f"Bearer {access_token}"}
+    query = (
+        f"'{folder_id}' in parents and "
+        f"name = '{nombre_archivo}' and "
+        f"trashed = false"
+    )
+    params = {
+        "q": query,
+        "fields": "files(id, name)",
+        "pageSize": 1
+    }
+    resp = requests.get(url, headers=headers, params=params)
+    if resp.status_code == 200:
+        return len(resp.json().get("files", [])) > 0
+    return False
