@@ -5,7 +5,7 @@ from flask import session
 import os
 
 load_dotenv()
-#BASE_CANVAS_URL = os.getenv('TECSUP_CANVAS_URL')
+#BASE_CANVAS_URL = os.getenv('TECSUP_CANVAS_URL') # Modo TECSUP - docentes
 BASE_CANVAS_URL = os.getenv('BASE_CANVAS_URL') # Modo desarrollo
 def obtener_cursos(token):
     headers = {

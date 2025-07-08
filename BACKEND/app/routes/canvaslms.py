@@ -4,7 +4,7 @@
 from flask import Blueprint, flash, request, session, redirect, url_for, render_template
 from app.services.canvas_service import obtener_cursos, obtener_materiales_curso, quitar_token_service
 from app.services.carpetas import switch_clasificacion_archivo
-from app.services.google_drive_service import subir_archivo_a_drive
+from app.services.google_drive_service import subir_archivo_a_drive, archivo_existe_en_drive
 from app.services.estructura_portafolio_service import buscar_o_crear_carpeta, crear_o_obtener_carpeta_de_ruta, \
     estructura_portafolio_digital, crear_estructura_con_lookup
 import mimetypes
@@ -105,6 +105,9 @@ def recopilar_material_ruta(curso_id):
         carpeta_destino = switch_clasificacion_archivo(nombre_archivo)
         carpeta_id_destino = crear_o_obtener_carpeta_de_ruta(google_token, carpeta_destino, carpetas_ids, carpeta_drive_id)
 
+        if archivo_existe_en_drive(google_token, carpeta_id_destino, nombre_archivo):
+            print(f"📁 El archivo ya existe: {nombre_archivo}")
+            continue  # Saltar este archivo
 
         resultado = subir_archivo_a_drive(google_token, nombre_archivo, contenido, tipo_mime, carpeta_id_destino)
         if not resultado:
