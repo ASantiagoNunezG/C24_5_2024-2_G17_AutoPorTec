@@ -40,8 +40,8 @@ def create_app():
         api_base_url='https://www.googleapis.com/oauth2/v2/',
         userinfo_endpoint='https://www.googleapis.com/oauth2/v2/userinfo',
         client_kwargs={'scope': 'openid email profile https://www.googleapis.com/auth/drive'},
-        redirect_uri='http://localhost:5000/auth/callback' # Desarrollo
-        #redirect_uri='https://autoportec.asnunezg.com/auth/callback' # Producción
+        #redirect_uri='http://localhost:5000/auth/callback' # Desarrollo
+        redirect_uri='https://autoportec.asnunezg.com/auth/callback' # Producción
     )
 
     # Ahora, importamos y registramos el blueprint de autenticación
