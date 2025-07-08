@@ -1,11 +1,10 @@
 # BACKEND/app/routes/canvaslms.py
-from wsgiref.util import request_uri
 
-from flask import Blueprint, flash, request, send_file, session, redirect, url_for, render_template, \
-    jsonify
+
+from flask import Blueprint, flash, request, session, redirect, url_for, render_template
 from app.services.canvas_service import obtener_cursos, obtener_materiales_curso, quitar_token_service
 from app.services.carpetas import switch_clasificacion_archivo
-from app.services.google_drive_service import subir_archivo_a_drive, archivo_existe_en_drive
+from app.services.google_drive_service import subir_archivo_a_drive
 from app.services.estructura_portafolio_service import buscar_o_crear_carpeta, crear_o_obtener_carpeta_de_ruta, \
     estructura_portafolio_digital, crear_estructura_con_lookup
 import mimetypes
