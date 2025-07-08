@@ -55,7 +55,7 @@ def mostrar_cursos_guardado():
     return render_template('canvaslms2.html', cursos=cursos)
 
 
-@canvaslms.route('/canvas/recopilar_material/<curso_id>', methods=['POST'])
+@canvaslms.route('/canvas/recopilar_material/<curso_id>', methods=['GET', 'POST'])
 def recopilar_material_ruta(curso_id):
     canvas_token = session.get('canvas_token')
     google_token = session.get('google_token', {}).get('access_token')
